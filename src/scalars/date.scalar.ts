@@ -1,9 +1,8 @@
 import { GraphQLScalarType, StringValueNode } from 'graphql';
-import parse from 'date-fns/parse'
 import format from 'date-fns/format'
+import { zonedTimeToUtc } from 'date-fns-tz'
 
 const dateFormat = 'yyyy-DDD\'T\'HH:mm:ss.SSS';
-const dateFormatTimezone = dateFormat + ' X';
 
 export const DateScalar = new GraphQLScalarType({
   name: 'ScetDateTime',
@@ -12,12 +11,9 @@ export const DateScalar = new GraphQLScalarType({
     return format(new Date(value), dateFormat);
   },
   parseValue(value: unknown): Date {
-    console.log('parse');
-    console.log(value);
-
     return new Date();
   },
   parseLiteral(value: unknown): Date {
-    return parse((value as StringValueNode).value + ' -00', dateFormatTimezone, new Date());
+    return zonedTimeToUtc((value as StringValueNode).value, 'America/Los_Angeles');
   }
 });

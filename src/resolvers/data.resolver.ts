@@ -1,11 +1,34 @@
-import { Arg, Args, Query, Resolver } from 'type-graphql';
+import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
 import { zonedTimeToUtc } from 'date-fns-tz'
 
 import { Data } from '../models';
 import { DateArgs, NameDateArgs } from '../args';
+import { Response } from '../responses';
+import { CreateRecordsInput } from '../inputs';
 
 @Resolver(() => Data)
 export class DataResolver {
+  @Mutation(() => Response)
+  public async createRecords(@Arg('data') data: CreateRecordsInput): Promise<Response> {
+    try {
+      const records = Data.create(data.records);
+
+      for (const record of records) {
+        await record.save();
+      }
+    } catch (error) {
+      return {
+        message: 'Data failed to import',
+        success: false
+      };
+    }
+
+    return {
+      message: 'Data imported',
+      success: true
+    };
+  }
+
   @Query(() => [ Data ])
   public data(): Promise<Data[]> {
     return Data.find();
@@ -38,9 +61,7 @@ export class DataResolver {
     const itemsBetween: Data[] = [];
 
     for (const item of data) {
-      const convertedScet = zonedTimeToUtc(item.scet, 'UTC');
-
-      if (convertedScet >= start && convertedScet <= end) {
+      if (item.scet >= start && item.scet <= end) {
         itemsBetween.push(item);
       }
     }
