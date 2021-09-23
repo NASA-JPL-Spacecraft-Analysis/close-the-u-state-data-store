@@ -1,5 +1,5 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
-import { zonedTimeToUtc } from 'date-fns-tz'
+import { Between } from 'typeorm';
 
 import { Data } from '../models';
 import { DateArgs, NameDateArgs } from '../args';
@@ -12,21 +12,24 @@ export class DataResolver {
   public async createRecords(@Arg('data') data: CreateRecordsInput): Promise<Response> {
     try {
       const records = Data.create(data.records);
+      const promises = [];
 
       for (const record of records) {
-        await record.save();
+        promises.push(record.save());
       }
+
+      return Promise.all(promises).then(() => {
+        return {
+          message: 'Data imported',
+          success: true
+        };
+      });
     } catch (error) {
       return {
         message: 'Data failed to import',
         success: false
       };
     }
-
-    return {
-      message: 'Data imported',
-      success: true
-    };
   }
 
   @Query(() => [ Data ])
@@ -40,7 +43,11 @@ export class DataResolver {
    */
   @Query(() => [ Data ])
   public async dataBetweenDates(@Args() { start, end }: DateArgs): Promise<Data[]> {
-    return this.filterBetweenDates(await this.data(), start, end);
+    return Data.find({
+      where: {
+        scet: Between(start, end)
+      }
+    })
   }
 
   @Query(() => [ Data ])
@@ -54,18 +61,11 @@ export class DataResolver {
 
   @Query(() => [ Data ])
   public async dataByNameBetweenDates(@Args() { name, start, end }: NameDateArgs): Promise<Data[]> {
-    return this.filterBetweenDates(await this.dataByName(name), start, end);
-  }
-
-  private filterBetweenDates(data: Data[], start: Date, end: Date): Data[] {
-    const itemsBetween: Data[] = [];
-
-    for (const item of data) {
-      if (item.scet >= start && item.scet <= end) {
-        itemsBetween.push(item);
+    return Data.find({
+      where: {
+        scet: Between(start, end),
+        name
       }
-    }
-
-    return itemsBetween;
+    })
   }
 }
