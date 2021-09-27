@@ -7,6 +7,7 @@ import {
   DataResolver
 } from './resolvers/';
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
+import { DateScalar } from './scalars';
 
 const main = async () => {
   await createConnection();
@@ -15,6 +16,10 @@ const main = async () => {
     resolvers: [
       DataResolver
     ],
+    scalarsMap: [{ 
+      type: Date,
+      scalar: DateScalar
+    }],
     validate: false
   });
 

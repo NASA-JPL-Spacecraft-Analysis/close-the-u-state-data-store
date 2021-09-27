@@ -10,12 +10,17 @@
   "keywords": [],
   "dependencies": {
     "apollo-server": "3.3.0",
+    "apollo-server-core": "^3.3.0",
+    "date-fns": "^2.24.0",
+    "date-fns-tz": "^1.1.6",
+    "dayjs": "^1.10.7",
     "mysql": "2.18.1",
     "type-graphql": "1.1.1",
     "typeorm": "0.2.37"
   },
   "devDependencies": {
     "graphql": "15.5.3",
+    "graphql-type-json": "0.3.2",
     "nodemon": "2.0.12",
     "ts-node": "10.2.1",
     "typedi": "0.10.0",

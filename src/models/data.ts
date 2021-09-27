@@ -1,4 +1,5 @@
 import { Field, ObjectType } from 'type-graphql';
+import { GraphQLJSON } from 'graphql-type-json';
 import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('data')
@@ -15,4 +16,12 @@ export class Data extends BaseEntity {
   @Column()
   @Field()
   public value!: number;
+
+  @Column({ type: 'json', nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
+  public metadata?: {};
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  public runId?: string;
 }
