@@ -19,7 +19,7 @@ export class EventResolver {
       return Promise.all(promises).then(() => {
         return {
           message: 'Events created',
-          success: false
+          success: true
         };
       });
     } catch (error) {
