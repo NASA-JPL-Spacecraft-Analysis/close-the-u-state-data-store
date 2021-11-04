@@ -2,11 +2,12 @@ import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
+import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 
 import {
-  DataResolver
+  DataResolver,
+  EventResolver
 } from './resolvers/';
-import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 import { DateScalar } from './scalars';
 
 const main = async () => {
@@ -14,7 +15,8 @@ const main = async () => {
 
   const schema = await buildSchema({
     resolvers: [
-      DataResolver
+      DataResolver,
+      EventResolver
     ],
     scalarsMap: [{ 
       type: Date,
