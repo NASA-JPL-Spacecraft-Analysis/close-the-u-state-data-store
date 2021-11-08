@@ -23,5 +23,13 @@ export class Data extends BaseEntity {
 
   @Column({ nullable: true })
   @Field({ nullable: true })
+  public planId?: string;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   public runId?: string;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  public sessionId?: string;
 }
