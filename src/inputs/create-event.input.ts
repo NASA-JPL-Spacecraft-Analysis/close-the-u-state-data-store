@@ -8,6 +8,9 @@ export class CreateEventInput {
   @Field()
   public name!: string;
 
+  @Field({ nullable: true })
+  public planId?: string;
+
   @Field()
   public recordType!: string;
   
@@ -16,4 +19,7 @@ export class CreateEventInput {
 
   @Field({ nullable: true })
   public scetEnd?: Date;
+
+  @Field({ nullable: true })
+  public sessionId?: string;
 }
