@@ -51,6 +51,15 @@ export class DataResolver {
   }
 
   @Query(() => [ Data ])
+  public dataByErt(@Arg('ert') ert: string): Promise<Data[]> {
+    return Data.find({
+      where: {
+        ert
+      }
+    });
+  }
+
+  @Query(() => [ Data ])
   public dataByName(@Arg('name') name: string): Promise<Data[]> {
     return Data.find({
       where: {

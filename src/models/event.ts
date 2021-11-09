@@ -4,6 +4,10 @@ import { BaseEntity, Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } fro
 @Entity('events')
 @ObjectType()
 export class Event extends BaseEntity {
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  public ert?: string;
+
   @PrimaryGeneratedColumn("uuid")
   @Field()
   public id!: string;

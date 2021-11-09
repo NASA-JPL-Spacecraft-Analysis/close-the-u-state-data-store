@@ -34,4 +34,13 @@ export class EventResolver {
   public events(): Promise<Event[]> {
     return Event.find();
   }
+
+  @Query(() => [ Event ])
+  public eventsByErt(@Arg('ert') ert: string): Promise<Event[]> {
+    return Event.find({
+      where: {
+        ert
+      }
+    });
+  }
 }
