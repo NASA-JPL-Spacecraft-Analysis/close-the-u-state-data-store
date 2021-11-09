@@ -9,19 +9,27 @@ export class Data extends BaseEntity {
   @Field()
   public name!: string;
 
-  @PrimaryColumn()
-  @Field()
-  public scet!: Date;
-
-  @Column()
-  @Field()
-  public value!: number;
-
   @Column({ type: 'json', nullable: true })
   @Field(() => GraphQLJSON, { nullable: true })
   public metadata?: {};
 
   @Column({ nullable: true })
   @Field({ nullable: true })
+  public planId?: string;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   public runId?: string;
+
+  @PrimaryColumn()
+  @Field()
+  public scet!: Date;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  public sessionId?: string;
+
+  @Column()
+  @Field()
+  public value!: number;
 }
