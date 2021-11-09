@@ -7,7 +7,7 @@ import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
 export class Data extends BaseEntity {
   @Column({ nullable: true })
   @Field({ nullable: true })
-  public ert?: string;
+  public ert?: Date;
 
   @Column()
   @Field()

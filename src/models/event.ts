@@ -6,7 +6,7 @@ import { BaseEntity, Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } fro
 export class Event extends BaseEntity {
   @Column({ nullable: true })
   @Field({ nullable: true })
-  public ert?: string;
+  public ert?: Date;
 
   @PrimaryGeneratedColumn("uuid")
   @Field()
