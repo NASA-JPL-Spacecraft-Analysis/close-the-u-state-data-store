@@ -3,6 +3,9 @@ import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class CreateRecordInput {
+  @Field({ nullable: true })
+  public ert?: Date;
+
   @Field()
   public name!: string;
 
