@@ -1,13 +1,20 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
-import { Between } from 'typeorm';
+import { Between, getConnection } from 'typeorm';
 
 import { Data } from '../models';
 import { DateArgs, NameDateArgs } from '../args';
 import { Response } from '../responses';
 import { CreateRecordsInput } from '../inputs';
+import { SharedRepository } from '../repositories';
 
 @Resolver(() => Data)
 export class DataResolver {
+  private sharedRepository: SharedRepository<Data>;
+
+  constructor() {
+    this.sharedRepository = new SharedRepository<Data>(getConnection(), Data);
+  }
+
   @Mutation(() => Response)
   public async createRecords(@Arg('data') data: CreateRecordsInput): Promise<Response> {
     try {
@@ -37,44 +44,23 @@ export class DataResolver {
     return Data.find();
   }
 
-  /**
-   * Gets a list of items that are between 2 dates.
-   * @returns a list of data.
-   */
   @Query(() => [ Data ])
-  public async dataBetweenDates(@Args() { start, end }: DateArgs): Promise<Data[]> {
-    return Data.find({
-      where: {
-        scet: Between(start, end)
-      }
-    })
+  public dataBetweenErts(@Args() dateArgs: DateArgs): Promise<Data[]> {
+    return this.sharedRepository.betweenErts(dateArgs);
   }
 
   @Query(() => [ Data ])
-  public dataBetweenErts(@Args() { start, end }: DateArgs): Promise<Data[]> {
-    return Data.find({
-      where: {
-        ert: Between(start, end)
-      }
-    });
+  public async dataBetweenScets(@Args() dateArgs: DateArgs): Promise<Data[]> {
+    return this.sharedRepository.betweenScets(dateArgs);
   }
 
   @Query(() => [ Data ])
   public dataByName(@Arg('name') name: string): Promise<Data[]> {
-    return Data.find({
-      where: {
-        name
-      }
-    });
+    return this.sharedRepository.byName(name);
   }
 
   @Query(() => [ Data ])
-  public async dataByNameBetweenDates(@Args() { name, start, end }: NameDateArgs): Promise<Data[]> {
-    return Data.find({
-      where: {
-        scet: Between(start, end),
-        name
-      }
-    })
+  public async dataByNameBetweenDates(@Args() nameDateArgs: NameDateArgs): Promise<Data[]> {
+    return this.sharedRepository.byNameBetweenDates(nameDateArgs);
   }
 }
