@@ -5,6 +5,10 @@ import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
 @Entity('data')
 @ObjectType()
 export class Data extends BaseEntity {
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  public ert?: Date;
+
   @Column()
   @Field()
   public name!: string;

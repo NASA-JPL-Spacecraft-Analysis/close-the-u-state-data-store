@@ -1,6 +1,8 @@
-import { Arg, Mutation, Query, Resolver } from 'type-graphql';
-import { CreateEventsInput } from '../inputs';
+import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
+import { Between } from 'typeorm';
 
+import { DateArgs } from '../args';
+import { CreateEventsInput } from '../inputs';
 import { Event } from '../models';
 import { Response } from '../responses';
 
@@ -33,5 +35,14 @@ export class EventResolver {
   @Query(() => [ Event ])
   public events(): Promise<Event[]> {
     return Event.find();
+  }
+
+  @Query(() => [ Event ])
+  public eventsBetweenErts(@Args() { start, end }: DateArgs): Promise<Event[]> {
+    return Event.find({
+      where: {
+        ert: Between(start, end)
+      }
+    });
   }
 }

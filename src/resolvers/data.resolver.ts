@@ -51,6 +51,15 @@ export class DataResolver {
   }
 
   @Query(() => [ Data ])
+  public dataBetweenErts(@Args() { start, end }: DateArgs): Promise<Data[]> {
+    return Data.find({
+      where: {
+        ert: Between(start, end)
+      }
+    });
+  }
+
+  @Query(() => [ Data ])
   public dataByName(@Arg('name') name: string): Promise<Data[]> {
     return Data.find({
       where: {

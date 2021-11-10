@@ -4,6 +4,10 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('events')
 @ObjectType()
 export class Event extends BaseEntity {
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  public ert?: Date;
+
   @PrimaryGeneratedColumn("uuid")
   @Field()
   public id!: string;
