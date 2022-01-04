@@ -1,6 +1,6 @@
 import { Field, ObjectType } from 'type-graphql';
 import { GraphQLJSON } from 'graphql-type-json';
-import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('data')
 @ObjectType()
@@ -8,6 +8,10 @@ export class Data extends BaseEntity {
   @Column({ nullable: true })
   @Field({ nullable: true })
   public ert?: Date;
+
+  @PrimaryGeneratedColumn("uuid")
+  @Field()
+  public id!: string;
 
   @Column()
   @Field()
@@ -25,7 +29,6 @@ export class Data extends BaseEntity {
   @Field({ nullable: true })
   public runId?: string;
 
-  @PrimaryColumn()
   @Field()
   public scet!: Date;
 
