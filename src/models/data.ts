@@ -29,6 +29,7 @@ export class Data extends BaseEntity {
   @Field({ nullable: true })
   public runId?: string;
 
+  @Column()
   @Field()
   public scet!: Date;
 
