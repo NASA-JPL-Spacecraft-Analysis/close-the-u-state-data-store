@@ -11,7 +11,7 @@ export const DateScalar = new GraphQLScalarType({
     return format(new Date(value), dateFormat);
   },
   parseValue(value: unknown): Date {
-    return new Date();
+    return zonedTimeToUtc(value as string, 'America/Los_Angeles');
   },
   parseLiteral(value: unknown): Date {
     return zonedTimeToUtc((value as StringValueNode).value, 'America/Los_Angeles');
