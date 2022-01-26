@@ -60,7 +60,7 @@ export class EventResolver {
   }
 
   @Query(() => [ Event ])
-  public async dataByNameBetweenDates(@Args() nameDateArgs: NameDateArgs): Promise<Event[]> {
+  public async eventsByNameBetweenDates(@Args() nameDateArgs: NameDateArgs): Promise<Event[]> {
     return this.sharedRepository.byNameBetweenDates(nameDateArgs);
   }
 }
