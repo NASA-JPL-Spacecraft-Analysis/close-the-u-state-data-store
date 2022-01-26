@@ -1,13 +1,20 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
-import { Between } from 'typeorm';
+import { Between, getConnection } from 'typeorm';
 
-import { DateArgs } from '../args';
+import { DateArgs, NameDateArgs } from '../args';
 import { CreateEventsInput } from '../inputs';
 import { Event } from '../models';
+import { SharedRepository } from '../repositories';
 import { Response } from '../responses';
 
 @Resolver(() => Event)
 export class EventResolver {
+  private sharedRepository: SharedRepository<Event>;
+
+  constructor() {
+    this.sharedRepository = new SharedRepository<Event>(getConnection(), Event);
+  }
+
   @Mutation(() => Response)
   public async createEvents(@Arg('data') data: CreateEventsInput): Promise<Response> {
     try {
@@ -38,11 +45,22 @@ export class EventResolver {
   }
 
   @Query(() => [ Event ])
-  public eventsBetweenErts(@Args() { start, end }: DateArgs): Promise<Event[]> {
-    return Event.find({
-      where: {
-        ert: Between(start, end)
-      }
-    });
+  public eventsBetweenErts(@Args() dateArgs: DateArgs): Promise<Event[]> {
+    return this.sharedRepository.betweenErts(dateArgs);
+  }
+
+  @Query(() => [ Event ])
+  public eventsBetweenScets(@Args() dateArgs: DateArgs): Promise<Event[]> {
+    return this.sharedRepository.betweenScets(dateArgs);
+  }
+
+  @Query(() => [ Event ])
+  public eventsByName(@Arg('name') name: string): Promise<Event[]> {
+    return this.sharedRepository.byName(name);
+  }
+
+  @Query(() => [ Event ])
+  public async eventsByNameBetweenDates(@Args() nameDateArgs: NameDateArgs): Promise<Event[]> {
+    return this.sharedRepository.byNameBetweenDates(nameDateArgs);
   }
 }
