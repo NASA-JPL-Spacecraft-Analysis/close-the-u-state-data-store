@@ -65,7 +65,7 @@ export class SharedRepository<T extends BaseEntity> extends Repository<T> {
     return this.find({
       where: {
         scet: Between(nameDateArgs.start, nameDateArgs.end),
-        name
+        name: nameDateArgs.name
       }
     });
   }
