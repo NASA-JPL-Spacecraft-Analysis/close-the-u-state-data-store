@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "state-data-store-gql",
+  "name": "clipper-state-data-store",
   "version": "0.0.1",
   "description": "",
   "main": "src/index.ts",
