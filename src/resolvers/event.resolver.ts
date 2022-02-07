@@ -1,5 +1,5 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
-import { Between, getConnection } from 'typeorm';
+import { getConnection } from 'typeorm';
 
 import { DateArgs, NameDateArgs } from '../args';
 import { CreateEventsInput } from '../inputs';
@@ -52,6 +52,11 @@ export class EventResolver {
   @Query(() => [ Event ])
   public eventsBetweenScets(@Args() dateArgs: DateArgs): Promise<Event[]> {
     return this.sharedRepository.betweenScets(dateArgs);
+  }
+
+  @Query(() => [ Event ])
+  public eventByCollectionId(@Arg('name') collectionId: string): Promise<Event[]> {
+    return this.sharedRepository.byName(collectionId);
   }
 
   @Query(() => [ Event ])

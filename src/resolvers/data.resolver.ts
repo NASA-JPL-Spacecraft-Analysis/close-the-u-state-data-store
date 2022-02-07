@@ -1,5 +1,5 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
-import { Between, getConnection } from 'typeorm';
+import { getConnection } from 'typeorm';
 
 import { Data } from '../models';
 import { DateArgs, NameDateArgs } from '../args';
@@ -52,6 +52,11 @@ export class DataResolver {
   @Query(() => [ Data ])
   public async dataBetweenScets(@Args() dateArgs: DateArgs): Promise<Data[]> {
     return this.sharedRepository.betweenScets(dateArgs);
+  }
+
+  @Query(() => [ Data ])
+  public dataByCollectionId(@Arg('name') collectionId: string): Promise<Data[]> {
+    return this.sharedRepository.byName(collectionId);
   }
 
   @Query(() => [ Data ])

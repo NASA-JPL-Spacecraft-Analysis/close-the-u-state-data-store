@@ -5,6 +5,10 @@ import { BaseEntity, Column, PrimaryGeneratedColumn } from 'typeorm';
 export class Node extends BaseEntity {
   @Column({ nullable: true })
   @Field({ nullable: true })
+  public collectionId?: string;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   public ert?: Date;
 
   @PrimaryGeneratedColumn("uuid")
@@ -34,4 +38,8 @@ export class Node extends BaseEntity {
   @Column({ nullable: true })
   @Field({ nullable: true })
   public sessionId?: string;
+
+  @Column()
+  @Field()
+  public type!: string
 }
