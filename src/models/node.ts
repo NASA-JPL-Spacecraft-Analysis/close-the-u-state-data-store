@@ -1,3 +1,4 @@
+import GraphQLJSON from 'graphql-type-json';
 import { Field, ObjectType } from 'type-graphql';
 import { BaseEntity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -14,6 +15,10 @@ export class Node extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   @Field()
   public id!: string;
+
+  @Column({ type: 'json', nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
+  public metadata?: {};
 
   @Column()
   @Field()

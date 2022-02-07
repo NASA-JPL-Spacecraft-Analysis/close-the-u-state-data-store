@@ -17,6 +17,7 @@ CREATE TABLE `events` (
   `collectionId` text,
   `ert` datetime(3) DEFAULT NULL,
   `id` text CHARACTER SET utf8 NOT NULL,
+  `metadata` json DEFAULT NULL,
   `message` text CHARACTER SET utf8 NOT NULL,
   `name` text CHARACTER SET utf8 NOT NULL,
   `planId` text CHARACTER SET utf8,

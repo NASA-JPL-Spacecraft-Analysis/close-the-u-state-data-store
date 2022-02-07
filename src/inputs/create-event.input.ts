@@ -1,3 +1,4 @@
+import GraphQLJSON from 'graphql-type-json';
 import { Field, InputType } from 'type-graphql';
 
 @InputType()
@@ -10,6 +11,9 @@ export class CreateEventInput {
 
   @Field({ nullable: true })
   public message?: string;
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  public metadata?: {};
 
   @Field()
   public name!: string;
