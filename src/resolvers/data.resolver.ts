@@ -70,8 +70,8 @@ export class DataResolver {
   }
 
   @Query(() => [ Data ])
-  public dataByCollectionId(@Arg('name') collectionId: string): Promise<Data[]> {
-    return this.sharedRepository.byName(collectionId);
+  public dataByCollectionId(@Arg('collectionId') collectionId: string): Promise<Data[]> {
+    return this.sharedRepository.byCollectionId(collectionId);
   }
 
   @Query(() => [ Data ])

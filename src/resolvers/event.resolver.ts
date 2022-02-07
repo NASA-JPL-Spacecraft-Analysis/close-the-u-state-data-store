@@ -70,8 +70,8 @@ export class EventResolver {
   }
 
   @Query(() => [ Event ])
-  public eventByCollectionId(@Arg('name') collectionId: string): Promise<Event[]> {
-    return this.sharedRepository.byName(collectionId);
+  public eventByCollectionId(@Arg('collectionId') collectionId: string): Promise<Event[]> {
+    return this.sharedRepository.byCollectionId(collectionId);
   }
 
   @Query(() => [ Event ])
