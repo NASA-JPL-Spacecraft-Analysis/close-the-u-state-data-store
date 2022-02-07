@@ -17,9 +17,6 @@ export class CreateEventInput {
   @Field({ nullable: true })
   public planId?: string;
 
-  @Field()
-  public recordType!: string;
-
   @Field({ nullable: true })
   public runId?: string;
   

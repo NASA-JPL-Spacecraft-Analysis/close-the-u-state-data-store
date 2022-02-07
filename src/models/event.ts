@@ -9,8 +9,4 @@ export class Event extends Node {
   @Column({ nullable: true })
   @Field({ nullable: true })
   public message?: string;
-
-  @Column()
-  @Field()
-  public recordType!: string;
 }
