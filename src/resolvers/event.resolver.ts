@@ -1,17 +1,23 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
+import Container from 'typedi';
 import { getConnection } from 'typeorm';
 
 import { DateArgs, NameDateArgs } from '../args';
+import { EVENT_TYPES } from '../constants';
 import { CreateEventsInput } from '../inputs';
 import { Event } from '../models';
 import { SharedRepository } from '../repositories';
 import { Response } from '../responses';
+import { ValidationService } from '../services';
 
 @Resolver(() => Event)
 export class EventResolver {
   private sharedRepository: SharedRepository<Event>;
 
-  constructor() {
+  constructor(
+    private validationService: ValidationService
+  ) {
+    this.validationService = Container.get(ValidationService);
     this.sharedRepository = new SharedRepository<Event>(getConnection(), Event);
   }
 
@@ -20,6 +26,15 @@ export class EventResolver {
     try {
       const events = Event.create(data.events);
       const promises = [];
+
+      const { errorMessage, valid } = this.validationService.validateTypes(events, EVENT_TYPES);
+
+      if (!valid && errorMessage) {
+        return {
+          message: errorMessage,
+          success: valid
+        };
+      }
 
       for (const event of events) {
         promises.push(event.save());

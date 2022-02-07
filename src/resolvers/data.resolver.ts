@@ -1,4 +1,5 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
+import Container from 'typedi';
 import { getConnection } from 'typeorm';
 
 import { Data } from '../models';
@@ -6,12 +7,17 @@ import { DateArgs, NameDateArgs } from '../args';
 import { Response } from '../responses';
 import { CreateRecordsInput } from '../inputs';
 import { SharedRepository } from '../repositories';
+import { ValidationService } from '../services';
+import { DATA_TYPES } from '../constants';
 
 @Resolver(() => Data)
 export class DataResolver {
   private sharedRepository: SharedRepository<Data>;
 
-  constructor() {
+  constructor(
+    private validationService: ValidationService
+  ) {
+    this.validationService = Container.get(ValidationService);
     this.sharedRepository = new SharedRepository<Data>(getConnection(), Data);
   }
 
@@ -20,6 +26,15 @@ export class DataResolver {
     try {
       const records = Data.create(data.records);
       const promises = [];
+
+      const { errorMessage, valid } = this.validationService.validateTypes(records, DATA_TYPES);
+
+      if (!valid && errorMessage) {
+        return {
+          message: errorMessage,
+          success: valid
+        };
+      }
 
       for (const record of records) {
         promises.push(record.save());

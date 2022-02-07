@@ -4,25 +4,34 @@ import { Field, InputType } from 'type-graphql';
 @InputType()
 export class CreateRecordInput {
   @Field({ nullable: true })
+  public collectionId?: string;
+
+  @Field({ nullable: true })
   public ert?: Date;
-
-  @Field()
-  public name!: string;
-
-  @Field(() => Date)
-  public scet!: Date;
 
   @Field(() => GraphQLJSON, { nullable: true })
   public metadata?: {};
+
+  @Field()
+  public name!: string;
 
   @Field({ nullable: true })
   public planId?: string;
 
   @Field({ nullable: true })
   public runId?: string;
+  
+  @Field()
+  public scet!: Date;
+
+  @Field({ nullable: true })
+  public scetEnd?: Date;
 
   @Field({ nullable: true })
   public sessionId?: string;
+
+  @Field({ nullable: true })
+  public type?: string
 
   @Field()
   public value!: number;

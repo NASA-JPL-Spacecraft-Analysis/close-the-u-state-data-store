@@ -39,7 +39,7 @@ export class Node extends BaseEntity {
   @Field({ nullable: true })
   public sessionId?: string;
 
-  @Column()
-  @Field()
-  public type!: string
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  public type?: string
 }
