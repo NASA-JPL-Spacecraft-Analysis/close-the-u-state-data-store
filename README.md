@@ -11,5 +11,6 @@
 ## Building the Clipper State Data Store
 
 1. Copy `ormconfig_template.json` and name the file `ormconfig.json`.
-2. Fill `ormconfig.json` with your DB information
+2. Fill `ormconfig.json` with your DB information.
 3. Build the Docker image, `docker build --tag clipper_state_data_store .`.
+4. To run the image use the following command: `docker run -p 4000:4000 clipper_state_data_store`.
