@@ -1,8 +1,9 @@
-import { BaseEntity, Between, Connection, ObjectType, Repository } from 'typeorm';
+import { Between, Connection, ObjectType, Repository } from 'typeorm';
 
 import { DateArgs, NameDateArgs } from '../args';
+import { Node } from '../models';
 
-export class SharedRepository<T extends BaseEntity> extends Repository<T> {
+export class SharedRepository<T extends Node> extends Repository<T> {
   constructor(connection: Connection, entity: ObjectType<T>) {
     super();
 
@@ -41,13 +42,21 @@ export class SharedRepository<T extends BaseEntity> extends Repository<T> {
     });
   }
 
+  public byCollectionId(collectionId: string): Promise<T[]> {
+    return this.find({
+      where: {
+        collectionId
+      }
+    });
+  }
+
   /**
    * Finds items with the passed name.
    * 
    * @param name The name of the item.
    * @returns A list of items.
    */
-  public byName(name: string): Promise<T[]>  {
+  public byName(name: string): Promise<T[]> {
     return this.find({
       where: {
         name
