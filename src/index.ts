@@ -7,6 +7,7 @@ import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-co
 
 import {
   DataResolver,
+  VectorSlotResolver,
   EventResolver
 } from './resolvers/';
 import { DateScalar } from './scalars';
@@ -17,9 +18,10 @@ const main = async () => {
   const schema = await buildSchema({
     resolvers: [
       DataResolver,
+      VectorSlotResolver,
       EventResolver
     ],
-    scalarsMap: [{ 
+    scalarsMap: [{
       type: Date,
       scalar: DateScalar
     }],
