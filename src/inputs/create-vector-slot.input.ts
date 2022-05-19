@@ -3,7 +3,7 @@ import { Field, InputType } from 'type-graphql';
 @InputType()
 export class CreateVectorSlotInput {
   @Field()
-  public applicableTime!: number;
+  public applicableTime!: Date;
 
   @Field()
   public base!: string;

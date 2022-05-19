@@ -6,7 +6,7 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class VectorSlot extends BaseEntity {
   @Column()
   @Field()
-  public applicableTime!: number;
+  public applicableTime!: Date;
 
   @Column()
   @Field()
