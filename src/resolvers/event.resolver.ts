@@ -60,27 +60,22 @@ export class EventResolver {
   }
 
   @Query(() => [ Event ])
-  public eventsBetweenErts(@Args() dateArgs: DateArgs): Promise<Event[]> {
-    return this.sharedRepository.betweenErts(dateArgs);
+  public eventsBetweenErts(@Arg('collectionId') collectionId: string, @Args() dateArgs: DateArgs): Promise<Event[]> {
+    return this.sharedRepository.betweenErts(collectionId, dateArgs);
   }
 
   @Query(() => [ Event ])
-  public eventsBetweenScets(@Args() dateArgs: DateArgs): Promise<Event[]> {
-    return this.sharedRepository.betweenScets(dateArgs);
+  public eventsBetweenScets(@Arg('collectionId') collectionId: string, @Args() dateArgs: DateArgs): Promise<Event[]> {
+    return this.sharedRepository.betweenScets(collectionId, dateArgs);
   }
 
   @Query(() => [ Event ])
-  public eventByCollectionId(@Arg('collectionId') collectionId: string): Promise<Event[]> {
-    return this.sharedRepository.byCollectionId(collectionId);
+  public eventsByName(@Arg('collectionId') collectionId: string, @Arg('name') name: string): Promise<Event[]> {
+    return this.sharedRepository.byName(collectionId, name);
   }
 
   @Query(() => [ Event ])
-  public eventsByName(@Arg('name') name: string): Promise<Event[]> {
-    return this.sharedRepository.byName(name);
-  }
-
-  @Query(() => [ Event ])
-  public async eventsByNameBetweenDates(@Args() nameDateArgs: NameDateArgs): Promise<Event[]> {
-    return this.sharedRepository.byNameBetweenDates(nameDateArgs);
+  public async eventsByNameBetweenDates(@Arg('collectionId') collectionId: string, @Args() nameDateArgs: NameDateArgs): Promise<Event[]> {
+    return this.sharedRepository.byNameBetweenDates(collectionId, nameDateArgs);
   }
 }
