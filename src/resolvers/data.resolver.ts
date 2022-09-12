@@ -78,4 +78,9 @@ export class DataResolver {
   public async dataByNameBetweenDates(@Arg('collectionId') collectionId: string, @Args() nameDateArgs: NameDateArgs): Promise<Data[]> {
     return this.sharedRepository.byNameBetweenDates(collectionId, nameDateArgs);
   }
+
+  @Query(() => [ Data ])
+  public async dataByApplicableTime(@Arg('collectionId') collectionId: string, @Arg('scet') scet: Date): Promise<Data[]> {
+    return this.sharedRepository.byApplicableTime(collectionId, scet);
+  }
 }
