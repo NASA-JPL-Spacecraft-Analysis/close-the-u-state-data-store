@@ -4,7 +4,7 @@ import { Field, InputType } from 'type-graphql';
 @InputType()
 export class CreateRecordInput {
   @Field({ nullable: true })
-  public collectionId?: string;
+  public collectionName?: string;
 
   @Field({ nullable: true })
   public ert?: Date;
@@ -20,7 +20,7 @@ export class CreateRecordInput {
 
   @Field({ nullable: true })
   public runId?: string;
-  
+
   @Field()
   public scet!: Date;
 
