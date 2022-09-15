@@ -55,28 +55,32 @@ export class DataResolver {
   }
 
   @Query(() => [ Data ])
-  public data(): Promise<Data[]> {
-    return Data.find();
+  public data(@Arg('collectionName') collectionName: string): Promise<Data[]> {
+    return Data.find({
+        where: {
+          collectionName
+        }
+    });
   }
 
   @Query(() => [ Data ])
-  public dataBetweenErts(@Arg('collectionId') collectionId: string, @Args() dateArgs: DateArgs): Promise<Data[]> {
-    return this.sharedRepository.betweenErts(collectionId, dateArgs);
+  public dataBetweenErts(@Arg('collectionName') collectionName: string, @Args() dateArgs: DateArgs): Promise<Data[]> {
+    return this.sharedRepository.betweenErts(collectionName, dateArgs);
   }
 
   @Query(() => [ Data ])
-  public async dataBetweenScets(@Arg('collectionId') collectionId: string, @Args() dateArgs: DateArgs): Promise<Data[]> {
-    return this.sharedRepository.betweenScets(collectionId, dateArgs);
+  public async dataBetweenScets(@Arg('collectionName') collectionName: string, @Args() dateArgs: DateArgs): Promise<Data[]> {
+    return this.sharedRepository.betweenScets(collectionName, dateArgs);
   }
 
   @Query(() => [ Data ])
-  public dataByName(@Arg('collectionId') collectionId: string, @Arg('name') name: string): Promise<Data[]> {
-    return this.sharedRepository.byName(collectionId, name);
+  public dataByName(@Arg('collectionName') collectionName: string, @Arg('name') name: string): Promise<Data[]> {
+    return this.sharedRepository.byName(collectionName, name);
   }
 
   @Query(() => [ Data ])
-  public async dataByNameBetweenDates(@Arg('collectionId') collectionId: string, @Args() nameDateArgs: NameDateArgs): Promise<Data[]> {
-    return this.sharedRepository.byNameBetweenDates(collectionId, nameDateArgs);
+  public async dataByNameBetweenDates(@Arg('collectionName') collectionName: string, @Args() nameDateArgs: NameDateArgs): Promise<Data[]> {
+    return this.sharedRepository.byNameBetweenDates(collectionName, nameDateArgs);
   }
 
   @Query(() => [ Data ])
