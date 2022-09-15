@@ -83,11 +83,11 @@ export class SharedRepository<T extends Node> extends Repository<T> {
    * @param scet a valid scet time
    * @returns a single item
    */
-  public byApplicableTime(collectionId: string, scet: Date): Promise<T[]> {
+  public byApplicableTime(collectionName: string, scet: Date): Promise<T[]> {
     // @ts-ignore next-line - ignores ts error for ordering
     return this.find({
       where: {
-        collectionId,
+        collectionName,
         scet: LessThanOrEqual(scet)
       },
       order: { scet: 'DESC' },
