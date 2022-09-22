@@ -1,4 +1,4 @@
-import { Between, Connection, ObjectType, Repository } from 'typeorm';
+import { LessThanOrEqual, Between, Connection, ObjectType, Repository } from 'typeorm';
 
 import { DateArgs, NameDateArgs } from '../args';
 import { Node } from '../models';
@@ -74,6 +74,25 @@ export class SharedRepository<T extends Node> extends Repository<T> {
         scet: Between(nameDateArgs.start, nameDateArgs.end),
         name: nameDateArgs.name
       }
+    });
+  }
+
+    /**
+   * Finds an item by applicable time with the passed collection and scet
+   *
+   * @param scet a valid scet time
+   * @returns a single item
+   */
+  public byApplicableTime(collectionName: string, name: string, scet: Date): Promise<T[]> {
+    // @ts-ignore next-line - ignores ts error for ordering
+    return this.find({
+      where: {
+        collectionName,
+        name,
+        scet: LessThanOrEqual(scet)
+      },
+      order: { scet: 'DESC' },
+      take: 1
     });
   }
 }
