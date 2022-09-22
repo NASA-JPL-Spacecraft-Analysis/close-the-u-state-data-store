@@ -84,7 +84,7 @@ export class DataResolver {
   }
 
   @Query(() => [ Data ])
-  public async dataByApplicableTime(@Arg('collectionName') collectionName: string, @Arg('scet') scet: Date): Promise<Data[]> {
-    return this.sharedRepository.byApplicableTime(collectionName, scet);
+  public async dataByApplicableTime(@Arg('collectionName') collectionName: string, @Arg('name') name: string, @Arg('scet') scet: Date): Promise<Data[]> {
+    return this.sharedRepository.byApplicableTime(collectionName, name, scet);
   }
 }
