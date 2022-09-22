@@ -4,7 +4,7 @@ import { Field, InputType } from 'type-graphql';
 @InputType()
 export class CreateEventInput {
   @Field({ nullable: true })
-  public collectionId?: string;
+  public collectionName?: string;
 
   @Field({ nullable: true })
   public ert?: Date;
@@ -23,7 +23,7 @@ export class CreateEventInput {
 
   @Field({ nullable: true })
   public runId?: string;
-  
+
   @Field()
   public scet!: Date;
 
