@@ -14,3 +14,21 @@
 2. Fill `ormconfig.json` with your DB information.
 3. Build the Docker image, `docker build --tag clipper_state_data_store .`.
 4. To run the image use the following command: `docker run -p 4000:4000 clipper_state_data_store`.
+
+## Checking the Release Version
+Since the store does not have a UI, a query is included to determine the version ID.  Using the GQL playground, execute the following:
+
+query version {
+  version {
+    version
+  }
+}
+
+Which should return a version along the lines of:
+{
+  "data": {
+    "version": {
+      "version": "V3.0"
+    }
+  }
+}
