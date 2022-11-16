@@ -6,7 +6,7 @@ import { BaseEntity, Column, PrimaryGeneratedColumn } from 'typeorm';
 export class Node extends BaseEntity {
   @Column({ nullable: true })
   @Field({ nullable: true })
-  public collectionId?: string;
+  public collectionName?: string;
 
   @Column({ nullable: true })
   @Field({ nullable: true })
@@ -31,7 +31,7 @@ export class Node extends BaseEntity {
   @Column({ nullable: true })
   @Field({ nullable: true })
   public runId?: string;
-  
+
   @Column()
   @Field()
   public scet!: Date;

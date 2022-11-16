@@ -55,32 +55,36 @@ export class DataResolver {
   }
 
   @Query(() => [ Data ])
-  public data(): Promise<Data[]> {
-    return Data.find();
+  public data(@Arg('collectionName') collectionName: string): Promise<Data[]> {
+    return Data.find({
+        where: {
+          collectionName
+        }
+    });
   }
 
   @Query(() => [ Data ])
-  public dataBetweenErts(@Args() dateArgs: DateArgs): Promise<Data[]> {
-    return this.sharedRepository.betweenErts(dateArgs);
+  public dataBetweenErts(@Arg('collectionName') collectionName: string, @Args() dateArgs: DateArgs): Promise<Data[]> {
+    return this.sharedRepository.betweenErts(collectionName, dateArgs);
   }
 
   @Query(() => [ Data ])
-  public async dataBetweenScets(@Args() dateArgs: DateArgs): Promise<Data[]> {
-    return this.sharedRepository.betweenScets(dateArgs);
+  public async dataBetweenScets(@Arg('collectionName') collectionName: string, @Args() dateArgs: DateArgs): Promise<Data[]> {
+    return this.sharedRepository.betweenScets(collectionName, dateArgs);
   }
 
   @Query(() => [ Data ])
-  public dataByCollectionId(@Arg('collectionId') collectionId: string): Promise<Data[]> {
-    return this.sharedRepository.byCollectionId(collectionId);
+  public dataByName(@Arg('collectionName') collectionName: string, @Arg('name') name: string): Promise<Data[]> {
+    return this.sharedRepository.byName(collectionName, name);
   }
 
   @Query(() => [ Data ])
-  public dataByName(@Arg('name') name: string): Promise<Data[]> {
-    return this.sharedRepository.byName(name);
+  public async dataByNameBetweenDates(@Arg('collectionName') collectionName: string, @Args() nameDateArgs: NameDateArgs): Promise<Data[]> {
+    return this.sharedRepository.byNameBetweenDates(collectionName, nameDateArgs);
   }
 
   @Query(() => [ Data ])
-  public async dataByNameBetweenDates(@Args() nameDateArgs: NameDateArgs): Promise<Data[]> {
-    return this.sharedRepository.byNameBetweenDates(nameDateArgs);
+  public async dataByApplicableTime(@Arg('collectionName') collectionName: string, @Arg('name') name: string, @Arg('scet') scet: Date): Promise<Data[]> {
+    return this.sharedRepository.byApplicableTime(collectionName, name, scet);
   }
 }

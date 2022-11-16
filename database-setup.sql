@@ -1,5 +1,5 @@
 CREATE TABLE `data` (
-  `collectionId` text CHARACTER SET utf8,
+  `collectionName` text CHARACTER SET utf8,
   `ert` datetime(3) DEFAULT NULL,
   `id` text CHARACTER SET utf8 NOT NULL,
   `metadata` json DEFAULT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE `data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `events` (
-  `collectionId` text,
+  `collectionName` text,
   `ert` datetime(3) DEFAULT NULL,
   `id` text CHARACTER SET utf8 NOT NULL,
   `metadata` json DEFAULT NULL,

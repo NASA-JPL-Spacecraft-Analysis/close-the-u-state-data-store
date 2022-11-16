@@ -1,4 +1,4 @@
-import { Between, Connection, ObjectType, Repository } from 'typeorm';
+import { LessThanOrEqual, Between, Connection, ObjectType, Repository } from 'typeorm';
 
 import { DateArgs, NameDateArgs } from '../args';
 import { Node } from '../models';
@@ -16,13 +16,14 @@ export class SharedRepository<T extends Node> extends Repository<T> {
 
   /**
    * Finds items between a start and ert.
-   * 
+   *
    * @param dateArgs A start and end ert.
    * @returns A list of items.
    */
-  public betweenErts(dateArgs: DateArgs): Promise<T[]> {
+  public betweenErts(collectionName: string, dateArgs: DateArgs): Promise<T[]> {
     return this.find({
       where: {
+        collectionName,
         ert: Between(dateArgs.start, dateArgs.end)
       }
     });
@@ -30,35 +31,31 @@ export class SharedRepository<T extends Node> extends Repository<T> {
 
   /**
    * Finds items between a start and end scet.
-   * 
+   *
    * @param dateArgs A start and end scet.
    * @returns A list of items.
    */
-  public async betweenScets(dateArgs: DateArgs): Promise<T[]> {
+  public async betweenScets(collectionName: string, dateArgs: DateArgs): Promise<T[]> {
     return this.find({
       where: {
+        collectionName,
         scet: Between(dateArgs.start, dateArgs.end)
       }
     });
   }
 
-  public byCollectionId(collectionId: string): Promise<T[]> {
-    return this.find({
-      where: {
-        collectionId
-      }
-    });
-  }
+
 
   /**
    * Finds items with the passed name.
-   * 
+   *
    * @param name The name of the item.
    * @returns A list of items.
    */
-  public byName(name: string): Promise<T[]> {
+  public byName(collectionName: string, name: string): Promise<T[]> {
     return this.find({
       where: {
+        collectionName,
         name
       }
     });
@@ -66,16 +63,36 @@ export class SharedRepository<T extends Node> extends Repository<T> {
 
   /**
    * Finds items with the passed name and between a start and end scet.
-   * 
+   *
    * @param nameDateArgs A name and start and end scets.
    * @returns A list of items.
    */
-  public byNameBetweenDates(nameDateArgs: NameDateArgs): Promise<T[]> {
+  public byNameBetweenDates(collectionName: string, nameDateArgs: NameDateArgs): Promise<T[]> {
     return this.find({
       where: {
+        collectionName,
         scet: Between(nameDateArgs.start, nameDateArgs.end),
         name: nameDateArgs.name
       }
+    });
+  }
+
+    /**
+   * Finds an item by applicable time with the passed collection and scet
+   *
+   * @param scet a valid scet time
+   * @returns a single item
+   */
+  public byApplicableTime(collectionName: string, name: string, scet: Date): Promise<T[]> {
+    // @ts-ignore next-line - ignores ts error for ordering
+    return this.find({
+      where: {
+        collectionName,
+        name,
+        scet: LessThanOrEqual(scet)
+      },
+      order: { scet: 'DESC' },
+      take: 1
     });
   }
 }
