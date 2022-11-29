@@ -40,7 +40,11 @@ const main = async () => {
     },
     introspection: true,
     plugins: [
-      ApolloServerPluginLandingPageGraphQLPlayground
+      ApolloServerPluginLandingPageGraphQLPlayground({
+        settings: {
+          'request.credentials': 'include'
+        }
+      })
     ],
     schema,
   });
