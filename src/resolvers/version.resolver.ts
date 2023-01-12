@@ -2,7 +2,7 @@ import { Query, Resolver } from 'type-graphql';
 
 import { Version } from '../models/version';
 
-const VERSION = 'V3.0';
+const VERSION = 'V4.0 G23.';
 
 @Resolver()
 export class VersionResolver {
