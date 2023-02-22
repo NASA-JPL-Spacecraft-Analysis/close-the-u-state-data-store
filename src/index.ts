@@ -8,6 +8,7 @@ import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-co
 import {
   DataResolver,
   EventResolver,
+  NodeResolver,
   VectorSlotResolver,
   VersionResolver
 } from './resolvers/';
@@ -20,6 +21,7 @@ const main = async () => {
     resolvers: [
       DataResolver,
       EventResolver,
+      NodeResolver,
       VectorSlotResolver,
       VersionResolver
     ],
