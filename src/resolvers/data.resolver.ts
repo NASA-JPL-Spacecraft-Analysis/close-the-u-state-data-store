@@ -91,6 +91,7 @@ export class DataResolver {
 
   @Query(() => [ Data ])
   public async dataByCollectionNameAndChannelNames(
+    @Arg('collectionName', () => String) collectionName: string,
     @Arg('channelNames', () => [ String ]) channelNames: string[],
     @Arg('start', {nullable: true}) start: Date,
     @Arg('end', { nullable: true}) end: Date
@@ -102,6 +103,7 @@ export class DataResolver {
     if (start && end) {
       return await Data.find({
         where: {
+          collectionName,
           name: In(channelNames),
           scet: Between(start, end)
         },
@@ -113,6 +115,7 @@ export class DataResolver {
 
     return await Data.find({
       where: {
+        collectionName,
         name: In(channelNames)
       },
       order: {
