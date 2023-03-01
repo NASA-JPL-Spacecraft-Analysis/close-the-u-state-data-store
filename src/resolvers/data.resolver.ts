@@ -90,7 +90,7 @@ export class DataResolver {
   }
 
   @Query(() => [ Data ])
-  public async dataByCollectionNameAndChannelNames(
+  public async dataByCollectionNameAndStateNames(
     @Arg('collectionName', () => String) collectionName: string,
     @Arg('channelNames', () => [ String ]) channelNames: string[],
     @Arg('start', {nullable: true}) start: Date,
