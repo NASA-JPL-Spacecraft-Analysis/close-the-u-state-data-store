@@ -1,6 +1,6 @@
 import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
 import Container from 'typedi';
-import { getConnection } from 'typeorm';
+import { Between, getConnection, In } from 'typeorm';
 
 import { Data } from '../models';
 import { DateArgs, NameDateArgs } from '../args';
@@ -9,6 +9,7 @@ import { CreateRecordsInput } from '../inputs';
 import { SharedRepository } from '../repositories';
 import { ValidationService } from '../services';
 import { DATA_TYPES } from '../constants';
+import { UserInputError } from 'apollo-server-core';
 
 @Resolver(() => Data)
 export class DataResolver {
@@ -86,5 +87,40 @@ export class DataResolver {
   @Query(() => [ Data ])
   public async dataByApplicableTime(@Arg('collectionName') collectionName: string, @Arg('name') name: string, @Arg('scet') scet: Date): Promise<Data[]> {
     return this.sharedRepository.byApplicableTime(collectionName, name, scet);
+  }
+
+  @Query(() => [ Data ])
+  public async dataByCollectionNameAndStateNames(
+    @Arg('collectionName', () => String) collectionName: string,
+    @Arg('stateNames', () => [ String ]) stateNames: string[],
+    @Arg('start', {nullable: true}) start: Date,
+    @Arg('end', { nullable: true}) end: Date
+  ): Promise<Data[]> {
+    if ((start && !end) || (!start && end)) {
+      throw new UserInputError('Please provide a valid start and end time');
+    }
+
+    if (start && end) {
+      return await Data.find({
+        where: {
+          collectionName,
+          name: In(stateNames),
+          scet: Between(start, end)
+        },
+        order: {
+          scet: 'ASC'
+        }
+      });
+    }
+
+    return await Data.find({
+      where: {
+        collectionName,
+        name: In(stateNames)
+      },
+      order: {
+        scet: 'ASC'
+      }
+    });
   }
 }
