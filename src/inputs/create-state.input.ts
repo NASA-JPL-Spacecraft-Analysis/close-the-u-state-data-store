@@ -2,7 +2,7 @@ import GraphQLJSON from 'graphql-type-json';
 import { Field, InputType } from 'type-graphql';
 
 @InputType()
-export class CreateRecordInput {
+export class CreateStateInput {
   @Field({ nullable: true })
   public collectionName?: string;
 
