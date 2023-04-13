@@ -1,2 +1,8 @@
-ALTER TABLE `states` RENAME TO `state`;
+ALTER TABLE `data` RENAME TO `state`;
 
+ALTER TABLE `state`
+ADD COLUMN `cpu` text DEFAULT NULL;
+ADD COLUMN `hexId` text DEFAULT NULL;
+ADD COLUMN `valueType` text DEFAULT NULL;
+ADD COLUMN `version` text DEFAULT NULL;
+ADD COLUMN `volatility` text DEFAULT NULL;
