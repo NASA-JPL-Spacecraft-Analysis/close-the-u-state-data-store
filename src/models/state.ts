@@ -3,7 +3,7 @@ import { Column, Entity } from 'typeorm';
 
 import { Node } from './node';
 
-@Entity('state')
+@Entity('states')
 @ObjectType()
 export class State extends Node {
     @Column()
