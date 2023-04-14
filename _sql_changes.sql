@@ -1,2 +1,2 @@
-ALTER TABLE `data` RENAME TO `state`;
+ALTER TABLE `data` RENAME TO `states`;
 
