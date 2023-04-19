@@ -1,3 +1,5 @@
+import { registerEnumType } from "type-graphql";
+
 export enum VALUE_TYPE {
     MEASURED = 'measured',
     PREDICTED = 'predicted',
@@ -5,6 +7,15 @@ export enum VALUE_TYPE {
 }
 
 export enum VOLATILITY {
-    VOLATILE,
-    NON_VOLATILE
+    VOLATILE = 'VOLATILE',
+    NON_VOLATILE = 'NON_VOLATILE'
 }
+
+
+registerEnumType(VOLATILITY, {
+    name: 'VOLATILITY'
+});
+
+registerEnumType(VALUE_TYPE, {
+    name: 'VALUE_TYPE'
+});

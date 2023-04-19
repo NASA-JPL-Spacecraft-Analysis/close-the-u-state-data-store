@@ -26,7 +26,7 @@ export class State extends Node {
 
     @Column()
     @Field()
-    public version!: number;
+    public version!: string;
 
     @Column()
     @Field()
