@@ -5,7 +5,7 @@ import { Node } from './node';
 import { VALUE_TYPE, VOLATILITY } from '../constants'
 
 
-@Entity('state')
+@Entity('states')
 @ObjectType()
 export class State extends Node {
     @Column()

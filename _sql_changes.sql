@@ -1,4 +1,4 @@
-ALTER TABLE `data` RENAME TO `state`;
+ALTER TABLE `data` RENAME TO `states`;
 
 ALTER TABLE `state`
 ADD COLUMN `cpu` text DEFAULT NULL;

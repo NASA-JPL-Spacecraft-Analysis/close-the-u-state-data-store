@@ -56,7 +56,7 @@ export class StateResolver {
   }
 
   @Query(() => [ State ])
-  public state(@Arg('collectionName') collectionName: string): Promise<State[]> {
+  public states(@Arg('collectionName') collectionName: string): Promise<State[]> {
     return State.find({
         where: {
           collectionName
