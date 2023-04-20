@@ -1,12 +1,8 @@
 import { Service } from 'typedi';
 
 import {
-    CHANNEL_TYPES,
-    FSW_PARAMETER_TYPES,
-    PREDICT_TYPES,
-    TREND_TYPES,
     STATE_TYPES,
-    STATE_VALIDATED_TYPES,
+    STATE_VALUE_TYPES,
     EVENT_TYPES
 } from '../constants';
 
@@ -36,31 +32,10 @@ export class ValidationService {
             }
 
             // check that states have the correct valueType
-            if (state.type && STATE_VALIDATED_TYPES[state.type]) {
-                switch (state.type) {
-                    case STATE_VALIDATED_TYPES.channel:
-                        if (!CHANNEL_TYPES.has(state.valueType)) {
-                            invalidValueTypes += `${state.name}: ${state.type } valueType must be one of: (${Array.from(CHANNEL_TYPES).join(', ')})`;
-                        }
-                        break;
-
-                    case STATE_VALIDATED_TYPES.fsw_parameter:
-                        if (!FSW_PARAMETER_TYPES.has(state.valueType)) {
-                            invalidValueTypes += `${state.name}: ${state.type} valueType must be one of: (${Array.from(FSW_PARAMETER_TYPES).join(', ')})`;
-                        }
-                        break;
-
-                    case STATE_VALIDATED_TYPES.predict:
-                        if (!PREDICT_TYPES.has(state.valueType)) {
-                            invalidValueTypes += `${state.name}: ${state.type} valueType must be one of: (${Array.from(PREDICT_TYPES).join(', ')})`;
-                        }
-                        break;
-
-                    case STATE_VALIDATED_TYPES.trend:
-                        if (!TREND_TYPES.has(state.valueType)) {
-                            invalidValueTypes += `${state.name}: ${state.type} valueType must be one of: (${Array.from(TREND_TYPES).join(', ')})`;
-                        }
-                        break;
+            if (state.type && STATE_VALUE_TYPES[state.type]) {
+                if (!STATE_VALUE_TYPES[state.type].includes(state.valueType)) {
+                    const seperator = index !== states.length - 1 ? ', ' : ' ';
+                    invalidValueTypes += `${state.name}: ${state.type } valueType must be one of: (${STATE_VALUE_TYPES[state.type].join(', ')})${seperator}`;
                 }
             }
         }
