@@ -2,33 +2,33 @@ import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
 import Container from 'typedi';
 import { Between, getConnection, In } from 'typeorm';
 
-import { Data } from '../models';
+import { State } from '../models';
 import { DateArgs, NameDateArgs } from '../args';
 import { Response } from '../responses';
-import { CreateRecordsInput } from '../inputs';
+import { CreateStatesInput } from '../inputs';
 import { SharedRepository } from '../repositories';
 import { ValidationService } from '../services';
-import { DATA_TYPES } from '../constants';
+import { STATE_TYPES } from '../constants';
 import { UserInputError } from 'apollo-server-core';
 
-@Resolver(() => Data)
-export class DataResolver {
-  private sharedRepository: SharedRepository<Data>;
+@Resolver(() => State)
+export class StateResolver {
+  private sharedRepository: SharedRepository<State>;
 
   constructor(
     private validationService: ValidationService
   ) {
     this.validationService = Container.get(ValidationService);
-    this.sharedRepository = new SharedRepository<Data>(getConnection(), Data);
+    this.sharedRepository = new SharedRepository<State>(getConnection(), State);
   }
 
   @Mutation(() => Response)
-  public async createRecords(@Arg('data') data: CreateRecordsInput): Promise<Response> {
+  public async createStates(@Arg('data') data: CreateStatesInput): Promise<Response> {
     try {
-      const records = Data.create(data.records);
+      const states = State.create(data.states);
       const promises = [];
 
-      const { errorMessage, valid } = this.validationService.validateTypes(records, DATA_TYPES);
+      const { errorMessage, valid } = this.validationService.validateTypes(states, STATE_TYPES);
 
       if (!valid && errorMessage) {
         return {
@@ -37,71 +37,71 @@ export class DataResolver {
         };
       }
 
-      for (const record of records) {
-        promises.push(record.save());
+      for (const state of states) {
+        promises.push(state.save());
       }
 
       return Promise.all(promises).then(() => {
         return {
-          message: 'Data imported',
+          message: 'State imported',
           success: true
         };
       });
     } catch (error) {
       return {
-        message: 'Data failed to import',
+        message: 'State failed to import',
         success: false
       };
     }
   }
 
-  @Query(() => [ Data ])
-  public data(@Arg('collectionName') collectionName: string): Promise<Data[]> {
-    return Data.find({
+  @Query(() => [ State ])
+  public states(@Arg('collectionName') collectionName: string): Promise<State[]> {
+    return State.find({
         where: {
           collectionName
         }
     });
   }
 
-  @Query(() => [ Data ])
-  public dataBetweenErts(@Arg('collectionName') collectionName: string, @Args() dateArgs: DateArgs): Promise<Data[]> {
+  @Query(() => [ State ])
+  public stateBetweenErts(@Arg('collectionName') collectionName: string, @Args() dateArgs: DateArgs): Promise<State[]> {
     return this.sharedRepository.betweenErts(collectionName, dateArgs);
   }
 
-  @Query(() => [ Data ])
-  public async dataBetweenScets(@Arg('collectionName') collectionName: string, @Args() dateArgs: DateArgs): Promise<Data[]> {
+  @Query(() => [ State ])
+  public async stateBetweenScets(@Arg('collectionName') collectionName: string, @Args() dateArgs: DateArgs): Promise<State[]> {
     return this.sharedRepository.betweenScets(collectionName, dateArgs);
   }
 
-  @Query(() => [ Data ])
-  public dataByName(@Arg('collectionName') collectionName: string, @Arg('name') name: string): Promise<Data[]> {
+  @Query(() => [ State ])
+  public stateByName(@Arg('collectionName') collectionName: string, @Arg('name') name: string): Promise<State[]> {
     return this.sharedRepository.byName(collectionName, name);
   }
 
-  @Query(() => [ Data ])
-  public async dataByNameBetweenDates(@Arg('collectionName') collectionName: string, @Args() nameDateArgs: NameDateArgs): Promise<Data[]> {
+  @Query(() => [ State ])
+  public async stateByNameBetweenDates(@Arg('collectionName') collectionName: string, @Args() nameDateArgs: NameDateArgs): Promise<State[]> {
     return this.sharedRepository.byNameBetweenDates(collectionName, nameDateArgs);
   }
 
-  @Query(() => [ Data ])
-  public async dataByApplicableTime(@Arg('collectionName') collectionName: string, @Arg('name') name: string, @Arg('scet') scet: Date): Promise<Data[]> {
+  @Query(() => [ State ])
+  public async stateByApplicableTime(@Arg('collectionName') collectionName: string, @Arg('name') name: string, @Arg('scet') scet: Date): Promise<State[]> {
     return this.sharedRepository.byApplicableTime(collectionName, name, scet);
   }
 
-  @Query(() => [ Data ])
-  public async dataByCollectionNameAndStateNames(
+  @Query(() => [ State ])
+  public async stateByCollectionNameAndStateNames(
     @Arg('collectionName', () => String) collectionName: string,
     @Arg('stateNames', () => [ String ]) stateNames: string[],
     @Arg('start', {nullable: true}) start: Date,
     @Arg('end', { nullable: true}) end: Date
-  ): Promise<Data[]> {
+  ): Promise<State[]> {
     if ((start && !end) || (!start && end)) {
       throw new UserInputError('Please provide a valid start and end time');
     }
 
     if (start && end) {
-      return await Data.find({
+      return await State.find({
         where: {
           collectionName,
           name: In(stateNames),
@@ -113,7 +113,7 @@ export class DataResolver {
       });
     }
 
-    return await Data.find({
+    return await State.find({
       where: {
         collectionName,
         name: In(stateNames)

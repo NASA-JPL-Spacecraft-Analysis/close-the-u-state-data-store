@@ -1,4 +1,4 @@
-CREATE TABLE `data` (
+CREATE TABLE `states` (
   `collectionName` text CHARACTER SET utf8,
   `ert` datetime(3) DEFAULT NULL,
   `id` text CHARACTER SET utf8 NOT NULL,

@@ -6,7 +6,7 @@ import { buildSchema } from 'type-graphql';
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 
 import {
-  DataResolver,
+  StateResolver,
   EventResolver,
   NodeResolver,
   VectorSlotResolver,
@@ -19,7 +19,7 @@ const main = async () => {
 
   const schema = await buildSchema({
     resolvers: [
-      DataResolver,
+      StateResolver,
       EventResolver,
       NodeResolver,
       VectorSlotResolver,

@@ -3,10 +3,10 @@ import { Column, Entity } from 'typeorm';
 
 import { Node } from './node';
 
-@Entity('data')
+@Entity('states')
 @ObjectType()
-export class Data extends Node {
-  @Column()
-  @Field()
-  public value!: number;
+export class State extends Node {
+    @Column()
+    @Field()
+    public value!: number;
 }

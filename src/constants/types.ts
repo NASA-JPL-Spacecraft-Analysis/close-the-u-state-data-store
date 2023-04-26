@@ -1,4 +1,4 @@
-export const DATA_TYPES: Set<string> = new Set([
+export const STATE_TYPES: Set<string> = new Set([
   'activity_instance',
   'alarm_limit',
   'channel',
