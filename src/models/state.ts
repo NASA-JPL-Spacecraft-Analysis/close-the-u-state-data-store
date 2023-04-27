@@ -10,11 +10,11 @@ import { VALUE_TYPE, VOLATILITY } from '../constants'
 export class State extends Node {
     @Column()
     @Field()
-    public cpu!: string;
+    public cpu?: string;
 
     @Column()
     @Field()
-    public hexId!: string;
+    public hexId?: string;
 
     @Column()
     @Field()
@@ -26,9 +26,9 @@ export class State extends Node {
 
     @Column()
     @Field()
-    public version!: string;
+    public version?: string;
 
     @Column()
-    @Field()
-    public volatility!: VOLATILITY;
+    @Field({ nullable: true })
+    public volatility?: VOLATILITY;
 }

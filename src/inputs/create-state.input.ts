@@ -50,6 +50,6 @@ export class CreateStateInput {
   @Field({ nullable: true })
   public version?: string;
 
-  @Field(() => VOLATILITY)
+  @Field(() => VOLATILITY, { nullable: true })
   public volatility?: VOLATILITY;
 }

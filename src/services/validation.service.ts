@@ -3,7 +3,8 @@ import { Service } from 'typedi';
 import {
     STATE_TYPES,
     STATE_VALUE_TYPES,
-    EVENT_TYPES
+    EVENT_TYPES,
+    VOLATILITY
 } from '../constants';
 
 import { Node, State } from '../models';
@@ -23,6 +24,7 @@ export class ValidationService {
     } {
         let invalidStates = '';
         let invalidValueTypes = '';
+        let invalidVolatility = '';
 
         for (const [index, state] of states.entries()) {
             // check that the state type is valid
@@ -38,6 +40,19 @@ export class ValidationService {
                     invalidValueTypes += `${state.name}: ${state.type } valueType must be one of: (${STATE_VALUE_TYPES[state.type].join(', ')})${seperator}`;
                 }
             }
+
+            // check that fsw_parameter type have volatility set
+            if (state.type && state.type === 'fsw_parameter') {
+                if (!state.volatility) {
+                    const seperator = index !== states.length - 1 ? ', ' : ' ';
+                    invalidVolatility += `${state.name}: ${state.type } volatility must be one of: (${Object.values(VOLATILITY)})${seperator}`;
+                }
+            }
+            // else remove volatility from all non fsw_parameter types
+            else {
+                delete state.volatility
+            }
+
         }
 
         if (invalidStates.length) {
@@ -54,8 +69,17 @@ export class ValidationService {
         if (invalidValueTypes.length) {
             return {
                 errorMessage:
-                    'The following state(s) have invalid value types: [' +
+                    'The following state(s) have invalid valueType based on the type: [' +
                     invalidValueTypes + ']',
+                valid: false
+            };
+        }
+
+        if (invalidVolatility.length) {
+            return {
+                errorMessage:
+                    'The following fsw_parameter state(s) are missing volatility: [' +
+                    invalidVolatility + ']',
                 valid: false
             };
         }
