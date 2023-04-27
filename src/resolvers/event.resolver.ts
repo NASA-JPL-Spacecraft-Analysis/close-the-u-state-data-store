@@ -3,7 +3,6 @@ import Container from 'typedi';
 import { getConnection } from 'typeorm';
 
 import { DateArgs, NameDateArgs } from '../args';
-import { EVENT_TYPES } from '../constants';
 import { CreateEventsInput } from '../inputs';
 import { Event } from '../models';
 import { SharedRepository } from '../repositories';
@@ -27,7 +26,7 @@ export class EventResolver {
       const events = Event.create(data.events);
       const promises = [];
 
-      const { errorMessage, valid } = this.validationService.validateTypes(events, EVENT_TYPES);
+      const { errorMessage, valid } = this.validationService.validateEventTypes(events);
 
       if (!valid && errorMessage) {
         return {

@@ -8,7 +8,6 @@ import { Response } from '../responses';
 import { CreateStatesInput } from '../inputs';
 import { SharedRepository } from '../repositories';
 import { ValidationService } from '../services';
-import { STATE_TYPES } from '../constants';
 import { UserInputError } from 'apollo-server-core';
 
 @Resolver(() => State)
@@ -28,7 +27,7 @@ export class StateResolver {
       const states = State.create(data.states);
       const promises = [];
 
-      const { errorMessage, valid } = this.validationService.validateTypes(states, STATE_TYPES);
+      const { errorMessage, valid } = this.validationService.validateStateTypes(states);
 
       if (!valid && errorMessage) {
         return {
