@@ -8,27 +8,27 @@ import { VALUE_TYPE, VOLATILITY } from '../constants'
 @Entity('states')
 @ObjectType()
 export class State extends Node {
-    @Column()
-    @Field()
+    @Column({ nullable: true })
+    @Field({ nullable: true })
     public cpu?: string;
 
-    @Column()
-    @Field()
+    @Column({ nullable: true })
+    @Field({ nullable: true })
     public hexId?: string;
 
     @Column()
     @Field()
     public value!: number;
 
-    @Column()
-    @Field()
+    @Column({ nullable: true })
+    @Field({ nullable: true })
     public valueType!: VALUE_TYPE;
 
-    @Column()
-    @Field()
+    @Column({ nullable: true })
+    @Field({ nullable: true })
     public version?: string;
 
-    @Column()
+    @Column({ nullable: true })
     @Field({ nullable: true })
     public volatility?: VOLATILITY;
 }
