@@ -53,6 +53,32 @@ export class EventResolver {
     }
   }
 
+  @Mutation(() => Response)
+  public async deleteEvents(
+      @Arg('collectionName') collectionName: string,
+      @Arg('ids', () => [String]) ids: string[]
+  ): Promise<Response> {
+      try {
+          const events = await Event.createQueryBuilder()
+              .delete()
+              .where('collectionName = :collectionName AND id IN (:...ids)', {
+                  collectionName,
+                  ids
+              })
+              .execute();
+
+          return {
+              message: `Successfully deleted ${events.affected} Events in ${collectionName}`,
+              success: true
+          };
+      } catch (error) {
+          return {
+              message: `Failed to delete Events in collectionName ${collectionName}`,
+              success: false
+          };
+      }
+  }
+
   @Query(() => [ Event ])
   public events(@Arg('collectionName') collectionName: string): Promise<Event[]> {
     return Event.find({
