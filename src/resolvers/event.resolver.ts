@@ -68,12 +68,51 @@ export class EventResolver {
               .execute();
 
           return {
+              message: `Successfully deleted ${events.affected} of ${ids.length} Events in ${collectionName}`,
+              success: true
+          };
+      } catch (error) {
+          return {
+              message: `Failed to delete Events in collectionName ${collectionName}`,
+              success: false
+          };
+      }
+  }
+
+  @Mutation(() => Response)
+  public async deleteEventsByCollection(
+      @Arg('collectionName') collectionName: string
+  ): Promise<Response> {
+      try {
+          const events = await Event.delete({ collectionName })
+
+          return {
               message: `Successfully deleted ${events.affected} Events in ${collectionName}`,
               success: true
           };
       } catch (error) {
           return {
               message: `Failed to delete Events in collectionName ${collectionName}`,
+              success: false
+          };
+      }
+  }
+
+  @Mutation(() => Response)
+  public async deleteEventsByType(
+      @Arg('collectionName') collectionName: string,
+      @Arg('type') type: string
+  ): Promise<Response> {
+      try {
+        const events = await Event.delete({ collectionName, type })
+
+          return {
+              message: `Successfully deleted ${events.affected} Events matching ${type} in collectionName ${collectionName}`,
+              success: true
+          };
+      } catch (error) {
+          return {
+              message: `Failed to delete Events matching ${type} in collectionName ${collectionName}`,
               success: false
           };
       }
