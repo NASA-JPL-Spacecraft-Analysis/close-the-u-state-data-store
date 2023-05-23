@@ -54,6 +54,52 @@ export class StateResolver {
     }
   }
 
+  @Mutation(() => Response)
+  public async deleteStates(
+      @Arg('collectionName') collectionName: string,
+      @Arg('ids', () => [String]) ids: string[]
+  ): Promise<Response> {
+      try {
+          const states = await State.createQueryBuilder()
+              .delete()
+              .where('collectionName = :collectionName AND id IN (:...ids)', {
+                  collectionName,
+                  ids
+              })
+              .execute();
+
+          return {
+              message: `Successfully deleted ${states.affected} States in ${collectionName}`,
+              success: true
+          };
+      } catch (error) {
+          return {
+              message: `Failed to delete States in collectionName ${collectionName}`,
+              success: false
+          };
+      }
+  }
+
+  @Mutation(() => Response)
+  public async deleteStatesByType(
+      @Arg('collectionName') collectionName: string,
+      @Arg('type') type: string
+  ): Promise<Response> {
+      try {
+          const states = await State.delete({ collectionName, type });
+
+          return {
+              message: `Successfully deleted ${states.affected} States matching ${type} in collectionName ${collectionName}`,
+              success: true
+          };
+      } catch (error) {
+          return {
+              message: `Failed to delete States matching ${type} in collectionName ${collectionName}`,
+              success: false
+          };
+      }
+  }
+
   @Query(() => [ State ])
   public states(@Arg('collectionName') collectionName: string): Promise<State[]> {
     return State.find({
