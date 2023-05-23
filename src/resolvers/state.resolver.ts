@@ -69,6 +69,25 @@ export class StateResolver {
               .execute();
 
           return {
+              message: `Successfully deleted ${states.affected} of ${ids.length} States in ${collectionName}`,
+              success: true
+          };
+      } catch (error) {
+          return {
+              message: `Failed to delete States in collectionName ${collectionName}`,
+              success: false
+          };
+      }
+  }
+
+  @Mutation(() => Response)
+  public async deleteStatesByCollection(
+      @Arg('collectionName') collectionName: string
+  ): Promise<Response> {
+      try {
+          const states = await State.delete({ collectionName })
+
+          return {
               message: `Successfully deleted ${states.affected} States in ${collectionName}`,
               success: true
           };
