@@ -57,19 +57,19 @@ export class StateResolver {
   @Mutation(() => Response)
   public async deleteStates(
       @Arg('collectionName') collectionName: string,
-      @Arg('ids', () => [String]) ids: string[]
+      @Arg('names', () => [String]) names: string[]
   ): Promise<Response> {
       try {
           const states = await State.createQueryBuilder()
               .delete()
-              .where('collectionName = :collectionName AND id IN (:...ids)', {
+              .where('collectionName = :collectionName AND name IN (:...names)', {
                   collectionName,
-                  ids
+                  names
               })
               .execute();
 
           return {
-              message: `Successfully deleted ${states.affected} of ${ids.length} States in ${collectionName}`,
+              message: `Successfully deleted ${states.affected} of ${names.length} States in ${collectionName}`,
               success: true
           };
       } catch (error) {
