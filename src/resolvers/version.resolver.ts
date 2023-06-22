@@ -2,13 +2,12 @@ import { Query, Resolver } from 'type-graphql';
 
 import { Version } from '../models/version';
 
-const VERSION = 'v5.0 G23.1';
+const VERSION = 'v5.0 G23.1a';
 
 @Resolver()
 export class VersionResolver {
-
-    @Query()
-    public version(): Version {
-      return { version: VERSION }
-    }
+  @Query()
+  public version(): Version {
+    return { version: VERSION };
+  }
 }
