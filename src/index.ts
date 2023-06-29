@@ -51,7 +51,7 @@ const main = async () => {
     schema,
   });
 
-  await server.listen(4000);
+  await server.listen(4001);
 
   console.log('Server has started!');
 };
