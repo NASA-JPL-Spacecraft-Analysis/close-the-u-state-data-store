@@ -168,6 +168,30 @@ export class StateResolver {
   }
 
   @Query(() => [State])
+  public async statesByPlanIdAndRunId(
+    @Arg('planId') planId: string,
+    @Arg('runId') runId: string,
+    @Arg('stateNames', () => [String], { nullable: true }) stateNames?: string[]
+  ): Promise<State[]> {
+    if (stateNames) {
+      return await State.find({
+        where: {
+          runId,
+          planId,
+          name: In(stateNames)
+        }
+      });
+    }
+
+    return await State.find({
+      where: {
+        runId,
+        planId
+      }
+    });
+  }
+
+  @Query(() => [State])
   public async stateByCollectionNameAndStateNames(
     @Arg('collectionName', () => String) collectionName: string,
     @Arg('stateNames', () => [String]) stateNames: string[],
