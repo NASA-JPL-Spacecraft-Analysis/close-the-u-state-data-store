@@ -10,9 +10,7 @@ export class VectorSlotResolver {
   @Mutation(() => Response)
   public async createVectorSlots(@Arg('data') data: createVectorSlotsInput): Promise<Response> {
     try {
-      const vectorSlots = VectorSlot.create(data.vectorSlots);
-
-      await getConnection().createQueryBuilder().insert().into(VectorSlot).values(vectorSlots).execute();
+      VectorSlot.create(data.vectorSlots).every((vectorSlot) => vectorSlot.save());
 
       return {
         message: 'Vector Slots imported',

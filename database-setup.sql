@@ -27,3 +27,18 @@ CREATE TABLE `events` (
   `sessionId` text CHARACTER SET utf8,
   `type` text CHARACTER SET utf8
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE
+  `vector_slot` (
+    `id` varchar(36) NOT NULL,
+    `endTdt` datetime(3) NOT NULL,
+    `base` text NOT NULL,
+    `head` text NOT NULL,
+    `vectorSlot` text NOT NULL,
+    `order` text NOT NULL,
+    `startTdt` datetime(3) NOT NULL,
+    `status` text NOT NULL,
+    `type` text NOT NULL,
+    `vector` json NOT NULL,
+    PRIMARY KEY (`id`)
+  ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
