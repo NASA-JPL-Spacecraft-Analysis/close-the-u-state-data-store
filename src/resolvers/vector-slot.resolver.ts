@@ -1,5 +1,4 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
-import { getConnection } from 'typeorm';
 
 import { createVectorSlotsInput } from '../inputs';
 import { VectorSlot } from '../models';

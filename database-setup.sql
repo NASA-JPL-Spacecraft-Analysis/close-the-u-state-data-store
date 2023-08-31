@@ -39,6 +39,7 @@ CREATE TABLE
     `startTdt` datetime(3) NOT NULL,
     `status` text NOT NULL,
     `type` text NOT NULL,
+    `valueType` text NOT NULL,
     `vector` json NOT NULL,
     PRIMARY KEY (`id`)
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8;

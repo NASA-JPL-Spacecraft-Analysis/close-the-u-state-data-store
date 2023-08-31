@@ -1,7 +1,32 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, ObjectType, registerEnumType } from 'type-graphql';
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Vector } from './vector';
 import GraphQLJSON from 'graphql-type-json';
+
+import { Vector } from './vector';
+
+export enum TYPE {
+  CONIC = 'CONIC',
+  FIXED = 'FIXED',
+  POLY = 'POLY'
+}
+
+registerEnumType(TYPE, { name: 'TYPE' });
+
+export enum STATUS {
+  ADDED = 'ADDED',
+  DELETED = 'DELETED',
+  REPLACED = 'REPLACED'
+}
+
+registerEnumType(STATUS, { name: 'STATUS' });
+
+// TODO: This should be renamed, consult with @dan.
+export enum VECTOR_SLOT_VALUE_TYPE {
+  PLANNED = 'PLANNED',
+  MEASURED = 'MEASURED'
+}
+
+registerEnumType(VECTOR_SLOT_VALUE_TYPE, { name: 'VECTOR_SLOT_VALUE_TYPE' });
 
 @Entity('vector_slot')
 @ObjectType()
@@ -31,12 +56,16 @@ export class VectorSlot extends BaseEntity {
   public startTdt!: Date;
 
   @Column()
-  @Field()
-  public status!: string;
+  @Field(() => STATUS)
+  public status!: STATUS;
 
   @Column()
-  @Field()
-  public type!: string;
+  @Field(() => TYPE)
+  public type!: TYPE;
+
+  @Column()
+  @Field(() => VECTOR_SLOT_VALUE_TYPE)
+  public valueType!: VECTOR_SLOT_VALUE_TYPE;
 
   @Column({ type: 'json' })
   @Field(() => GraphQLJSON)

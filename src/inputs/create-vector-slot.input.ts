@@ -1,7 +1,8 @@
 import { Field, InputType } from 'type-graphql';
+import GraphQLJSON from 'graphql-type-json';
 
 import { Vector } from '../models/vector';
-import GraphQLJSON from 'graphql-type-json';
+import { STATUS, TYPE, VECTOR_SLOT_VALUE_TYPE } from '../models';
 
 @InputType()
 export class CreateVectorSlotInput {
@@ -20,11 +21,14 @@ export class CreateVectorSlotInput {
   @Field()
   public startTdt!: Date;
 
-  @Field()
-  public status!: string;
+  @Field(() => STATUS)
+  public status!: STATUS;
 
-  @Field()
-  public type!: string;
+  @Field(() => TYPE)
+  public type!: TYPE;
+
+  @Field(() => VECTOR_SLOT_VALUE_TYPE)
+  public valueType!: VECTOR_SLOT_VALUE_TYPE;
 
   @Field(() => GraphQLJSON)
   public vector!: Vector;
