@@ -53,6 +53,10 @@ export class VectorSlot extends BaseEntity {
 
   @Column()
   @Field()
+  public slot!: string;
+
+  @Column()
+  @Field()
   public startTdt!: Date;
 
   @Column()
@@ -70,8 +74,4 @@ export class VectorSlot extends BaseEntity {
   @Column({ type: 'json' })
   @Field(() => GraphQLJSON)
   public vector!: Vector;
-
-  @Column()
-  @Field()
-  public vectorSlot!: string;
 }

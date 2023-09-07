@@ -19,6 +19,9 @@ export class CreateVectorSlotInput {
   public order!: string;
 
   @Field()
+  public slot!: string;
+
+  @Field()
   public startTdt!: Date;
 
   @Field(() => STATUS)
@@ -32,7 +35,4 @@ export class CreateVectorSlotInput {
 
   @Field(() => GraphQLJSON)
   public vector!: Vector;
-
-  @Field()
-  public vectorSlot!: string;
 }
