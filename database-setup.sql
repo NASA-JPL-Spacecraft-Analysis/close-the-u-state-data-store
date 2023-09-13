@@ -31,15 +31,17 @@ CREATE TABLE `events` (
 CREATE TABLE
   `vector_slot` (
     `id` varchar(36) NOT NULL,
-    `endTdt` datetime(3) NOT NULL,
+    `endTdt` datetime(3) DEFAULT NULL,
     `base` text NOT NULL,
     `head` text NOT NULL,
     `slot` text NOT NULL,
-    `order` text NOT NULL,
-    `startTdt` datetime(3) NOT NULL,
+    `order` text DEFAULT NULL,
+    `startTdt` datetime(3) DEFAULT NULL,
     `status` text NOT NULL,
-    `type` text NOT NULL,
-    `valueType` text NOT NULL,
-    `vector` json NOT NULL,
+    `type` text DEFAULT NULL,
+    `valueType` text DEFAULT NULL,
+    `x_coefficients` json DEFAULT NULL,
+    `y_coefficients` json DEFAULT NULL,
+    `z_coefficients` json DEFAULT NULL,
     PRIMARY KEY (`id`)
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
