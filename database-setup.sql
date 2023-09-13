@@ -15,7 +15,7 @@ CREATE TABLE `states` (
   `hexId` text DEFAULT NULL,
   `valueType` text DEFAULT NULL,
   `version` text DEFAULT NULL,
-  `volatility` text DEFAULT NULL;
+  `volatility` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `events` (
