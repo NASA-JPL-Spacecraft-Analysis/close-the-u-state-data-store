@@ -10,7 +10,12 @@ CREATE TABLE `states` (
   `scetEnd` datetime(3) DEFAULT NULL,
   `sessionId` text CHARACTER SET utf8,
   `type` text CHARACTER SET utf8,
-  `value` double NOT NULL
+  `value` double NOT NULL,
+  `cpu` text DEFAULT NULL,
+  `hexId` text DEFAULT NULL,
+  `valueType` text DEFAULT NULL,
+  `version` text DEFAULT NULL,
+  `volatility` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `events` (
