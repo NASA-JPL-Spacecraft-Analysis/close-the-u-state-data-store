@@ -1,9 +1,9 @@
 import { registerEnumType } from "type-graphql";
 
 export enum VALUE_TYPE {
-    MEASURED = 'measured',
-    PREDICTED = 'predicted',
-    DERIVED = 'derived'
+    MEASURED = 'MEASURED',
+    PREDICTED = 'PREDICTED',
+    DERIVED = 'DERIVED'
 }
 
 export enum VOLATILITY {
