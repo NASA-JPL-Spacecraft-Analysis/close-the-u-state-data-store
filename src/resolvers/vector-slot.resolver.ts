@@ -31,12 +31,31 @@ export class VectorSlotResolver {
 
   @Query(() => [VectorSlot])
   public async vectorSlotsByTime(@Arg('scet') scet: Date): Promise<VectorSlot[]> {
-    return VectorSlot.createQueryBuilder('vector_slot')
-      .groupBy('vector_slot.slot')
-      .where({ startTdt: MoreThanOrEqual(scet) })
-      .orderBy('vector_slot.startTdt', 'ASC')
-      .addOrderBy('vector_slot.order', 'ASC')
-      .addOrderBy('vector_slot.slot', 'ASC')
-      .getMany();
+    const slots: Record<string, VectorSlot> = {};
+    const vectorSlots = await VectorSlot.find();
+
+    for (const vs of vectorSlots) {
+      const startTdt = vs.startTdt;
+      const existingStartTdt = slots[vs.slot]?.startTdt;
+
+      /**
+       * If we haven't come across a slot yet, populate it otherwise:
+       * 1. If the startTdt is before the query time
+       * 2. And the startTdt is newer than the existing record for that slot
+       *
+       * Then we return the slot value.
+       */
+      if (
+        slots[vs.slot] === undefined ||
+        (startTdt !== undefined &&
+          existingStartTdt !== undefined &&
+          startTdt.getTime() <= scet.getTime() &&
+          startTdt.getTime() > existingStartTdt.getTime())
+      ) {
+        slots[vs.slot] = vs;
+      }
+    }
+
+    return Object.values(slots).sort((a, b) => Number(a.slot) - Number(b.slot));
   }
 }
