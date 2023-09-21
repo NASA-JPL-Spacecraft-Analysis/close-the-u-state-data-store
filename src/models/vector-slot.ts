@@ -10,11 +10,11 @@ export enum TYPE {
 registerEnumType(TYPE, { name: 'TYPE' });
 
 export enum STATUS {
-  ADDED = 'ADDED',
-  DELETED = 'DELETED',
-  EMPTY = 'EMPTY',
-  REPLACED = 'REPLACED',
-  UNCHANGED = 'UNCHANGED'
+  added = 'added',
+  deleted = 'deleted',
+  empty = 'empty',
+  replacement = 'replacement',
+  unchanged = 'unchanged'
 }
 registerEnumType(STATUS, { name: 'STATUS' });
 
