@@ -1,16 +1,43 @@
 import { Field, InputType } from 'type-graphql';
+import GraphQLJSON from 'graphql-type-json';
+
+import { STATUS, TYPE, VECTOR_SLOT_VALUE_TYPE } from '../models';
 
 @InputType()
 export class CreateVectorSlotInput {
-  @Field()
-  public applicableTime!: Date;
+  @Field({ nullable: true })
+  public base?: string;
+
+  @Field({ nullable: true })
+  public endTdt?: Date;
+
+  @Field({ nullable: true })
+  public head?: string;
+
+  @Field({ nullable: true })
+  public order?: string;
 
   @Field()
-  public base!: string;
+  public slot!: string;
 
-  @Field()
-  public head!: string;
+  @Field({ nullable: true })
+  public startTdt?: Date;
 
-  @Field()
-  public slot!: number;
+  @Field(() => STATUS)
+  public status!: STATUS;
+
+  @Field(() => TYPE, { nullable: true })
+  public type?: TYPE;
+
+  @Field(() => VECTOR_SLOT_VALUE_TYPE, { nullable: true })
+  public valueType?: VECTOR_SLOT_VALUE_TYPE;
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  public xCoefficients?: string[];
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  public yCoefficients?: string[];
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  public zCoefficients?: string[];
 }
