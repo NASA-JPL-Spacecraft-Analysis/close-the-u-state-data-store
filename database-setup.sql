@@ -34,7 +34,7 @@ CREATE TABLE
     `endTdt` datetime(3) DEFAULT NULL,
     `base` text NOT NULL,
     `head` text NOT NULL,
-    `slot` text NOT NULL,
+    `vectorSlot` text NOT NULL,
     `order` text DEFAULT NULL,
     `startTdt` datetime(3) DEFAULT NULL,
     `status` text NOT NULL,
