@@ -18,7 +18,7 @@ export class CreateVectorSlotInput {
   public order?: string;
 
   @Field()
-  public slot!: string;
+  public vectorSlot!: string;
 
   @Field({ nullable: true })
   public startTdt?: Date;

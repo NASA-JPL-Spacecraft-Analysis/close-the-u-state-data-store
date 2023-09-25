@@ -50,7 +50,7 @@ export class VectorSlot extends BaseEntity {
 
   @Column()
   @Field()
-  public slot!: string;
+  public vectorSlot!: string;
 
   @Column({ nullable: true })
   @Field({ nullable: true })
