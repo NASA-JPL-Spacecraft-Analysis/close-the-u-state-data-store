@@ -36,7 +36,7 @@ export class VectorSlotResolver {
 
     for (const vs of vectorSlots) {
       const startTdt = vs.startTdt;
-      const existingStartTdt = slots[vs.slot]?.startTdt;
+      const existingStartTdt = slots[vs.vectorSlot]?.startTdt;
 
       /**
        * If we haven't come across a slot yet, populate it otherwise:
@@ -46,16 +46,16 @@ export class VectorSlotResolver {
        * Then we return the slot value.
        */
       if (
-        slots[vs.slot] === undefined ||
+        slots[vs.vectorSlot] === undefined ||
         (startTdt !== undefined &&
           existingStartTdt !== undefined &&
           startTdt.getTime() <= scet.getTime() &&
           startTdt.getTime() > existingStartTdt.getTime())
       ) {
-        slots[vs.slot] = vs;
+        slots[vs.vectorSlot] = vs;
       }
     }
 
-    return Object.values(slots).sort((a, b) => Number(a.slot) - Number(b.slot));
+    return Object.values(slots).sort((a, b) => Number(a.vectorSlot) - Number(b.vectorSlot));
   }
 }
