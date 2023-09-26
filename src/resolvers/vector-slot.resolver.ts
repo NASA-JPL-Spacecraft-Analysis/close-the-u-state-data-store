@@ -32,7 +32,7 @@ export class VectorSlotResolver {
   @Query(() => [VectorSlot])
   public async vectorSlotsByTime(@Arg('scet') scet: Date): Promise<VectorSlot[]> {
     const slots: Record<string, VectorSlot> = {};
-    const vectorSlots = await VectorSlot.find();
+    const vectorSlots = await VectorSlot.find({ order: { startTdt: 'DESC' } });
 
     for (const vs of vectorSlots) {
       const startTdt = vs.startTdt;
@@ -50,7 +50,7 @@ export class VectorSlotResolver {
         (startTdt !== undefined &&
           existingStartTdt !== undefined &&
           startTdt.getTime() <= scet.getTime() &&
-          startTdt.getTime() > existingStartTdt.getTime())
+          existingStartTdt.getTime() > scet.getTime())
       ) {
         slots[vs.vectorSlot] = vs;
       }
