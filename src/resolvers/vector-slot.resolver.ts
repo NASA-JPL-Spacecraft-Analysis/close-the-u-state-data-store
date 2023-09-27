@@ -3,6 +3,7 @@ import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { createVectorSlotsInput } from '../inputs';
 import { VectorSlot } from '../models';
 import { Response } from '../responses';
+import { LessThan, LessThanOrEqual } from 'typeorm';
 
 @Resolver(() => VectorSlot)
 export class VectorSlotResolver {
@@ -23,38 +24,62 @@ export class VectorSlotResolver {
     }
   }
 
+  @Mutation(() => Response)
+  public async deleteVectorSlots(@Arg('collectionName') collectionName: string) {
+    try {
+      const vectorSlots = await VectorSlot.createQueryBuilder()
+        .delete()
+        .where('collectionName = :collectionName', { collectionName })
+        .execute();
+
+      return {
+        message: `Successfully deleted ${vectorSlots.affected} Vector Slots in ${collectionName}`,
+        success: true
+      };
+    } catch (error) {
+      return {
+        message: `Failed to delete Vector Slots in collectionName: ${collectionName}`,
+        success: false
+      };
+    }
+  }
+
   @Query(() => [VectorSlot])
-  public vectorSlots(): Promise<VectorSlot[]> {
+  public vectorSlots(
+    @Arg('collectionName', { nullable: true }) collectionName: string
+  ): Promise<VectorSlot[]> {
+    if (collectionName !== undefined) {
+      return VectorSlot.find({ where: { collectionName } });
+    }
+
     return VectorSlot.find();
   }
 
   @Query(() => [VectorSlot])
-  public async vectorSlotsByTime(@Arg('scet') scet: Date): Promise<VectorSlot[]> {
-    const slots: Record<string, VectorSlot> = {};
-    const vectorSlots = await VectorSlot.find({ order: { applicableTime: 'DESC' } });
+  public async vectorSlotsByTime(
+    @Arg('scet') scet: Date,
+    @Arg('collectionName') collectionName: string
+  ): Promise<VectorSlot[]> {
+    const vectorSlots = await VectorSlot.find({
+      where: { applicableTime: LessThanOrEqual(scet), collectionName }
+    });
 
-    for (const vs of vectorSlots) {
-      const applicableTime = vs.applicableTime;
-      const existingApplicableTime = slots[vs.vectorSlot]?.applicableTime;
+    const vectorSlotMap: Record<string, VectorSlot> = {};
 
-      /**
-       * If we haven't come across a slot yet, populate it otherwise:
-       * 1. If the applicableTime is before the query time
-       * 2. And the applicableTime is newer than the existing record for that slot
-       *
-       * Then we return the slot value.
-       */
+    vectorSlots.forEach((vs) => {
+      const existingSlot = vectorSlotMap[vs.vectorSlot];
+
       if (
-        slots[vs.vectorSlot] === undefined ||
-        (applicableTime !== undefined &&
-          existingApplicableTime !== undefined &&
-          applicableTime.getTime() <= scet.getTime() &&
-          existingApplicableTime.getTime() > scet.getTime())
+        existingSlot === undefined ||
+        (existingSlot !== undefined &&
+          vs.applicableTime !== undefined &&
+          existingSlot.applicableTime !== undefined &&
+          vs.applicableTime > existingSlot.applicableTime)
       ) {
-        slots[vs.vectorSlot] = vs;
+        vectorSlotMap[vs.vectorSlot] = vs;
       }
-    }
+    });
 
-    return Object.values(slots).sort((a, b) => Number(a.vectorSlot) - Number(b.vectorSlot));
+    return Object.values(vectorSlotMap).sort((a, b) => Number(a.vectorSlot) - Number(b.vectorSlot));
   }
 }

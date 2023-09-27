@@ -44,5 +44,6 @@ CREATE TABLE
     `x_coefficients` json DEFAULT NULL,
     `y_coefficients` json DEFAULT NULL,
     `z_coefficients` json DEFAULT NULL,
+    `collectionName` text DEFAULT NULL,
     PRIMARY KEY (`id`)
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8;

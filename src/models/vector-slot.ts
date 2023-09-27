@@ -38,6 +38,10 @@ export class VectorSlot extends BaseEntity {
 
   @Column({ nullable: true })
   @Field({ nullable: true })
+  public collectionName?: string;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   public endTdt?: Date;
 
   @Column({ nullable: true })
