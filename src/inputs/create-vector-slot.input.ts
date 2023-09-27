@@ -6,6 +6,9 @@ import { STATUS, TYPE, VECTOR_SLOT_VALUE_TYPE } from '../models';
 @InputType()
 export class CreateVectorSlotInput {
   @Field({ nullable: true })
+  public applicableTime?: Date;
+
+  @Field({ nullable: true })
   public base?: string;
 
   @Field({ nullable: true })

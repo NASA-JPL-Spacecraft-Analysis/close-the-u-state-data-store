@@ -37,6 +37,7 @@ CREATE TABLE
     `vectorSlot` text NOT NULL,
     `order` text DEFAULT NULL,
     `startTdt` datetime(3) DEFAULT NULL,
+    `applicableTime` datetime(3) DEFAULT NULL,
     `status` text NOT NULL,
     `type` text DEFAULT NULL,
     `valueType` text DEFAULT NULL,

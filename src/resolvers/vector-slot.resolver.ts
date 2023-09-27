@@ -1,5 +1,4 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
-import { MoreThanOrEqual } from 'typeorm';
 
 import { createVectorSlotsInput } from '../inputs';
 import { VectorSlot } from '../models';
@@ -32,25 +31,25 @@ export class VectorSlotResolver {
   @Query(() => [VectorSlot])
   public async vectorSlotsByTime(@Arg('scet') scet: Date): Promise<VectorSlot[]> {
     const slots: Record<string, VectorSlot> = {};
-    const vectorSlots = await VectorSlot.find({ order: { startTdt: 'DESC' } });
+    const vectorSlots = await VectorSlot.find({ order: { applicableTime: 'DESC' } });
 
     for (const vs of vectorSlots) {
-      const startTdt = vs.startTdt;
-      const existingStartTdt = slots[vs.vectorSlot]?.startTdt;
+      const applicableTime = vs.applicableTime;
+      const existingApplicableTime = slots[vs.vectorSlot]?.applicableTime;
 
       /**
        * If we haven't come across a slot yet, populate it otherwise:
-       * 1. If the startTdt is before the query time
-       * 2. And the startTdt is newer than the existing record for that slot
+       * 1. If the applicableTime is before the query time
+       * 2. And the applicableTime is newer than the existing record for that slot
        *
        * Then we return the slot value.
        */
       if (
         slots[vs.vectorSlot] === undefined ||
-        (startTdt !== undefined &&
-          existingStartTdt !== undefined &&
-          startTdt.getTime() <= scet.getTime() &&
-          existingStartTdt.getTime() > scet.getTime())
+        (applicableTime !== undefined &&
+          existingApplicableTime !== undefined &&
+          applicableTime.getTime() <= scet.getTime() &&
+          existingApplicableTime.getTime() > scet.getTime())
       ) {
         slots[vs.vectorSlot] = vs;
       }
