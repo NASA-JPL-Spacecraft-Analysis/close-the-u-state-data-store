@@ -15,7 +15,7 @@ export class CreateVectorSlotInput {
   public collectionName?: string;
 
   @Field({ nullable: true })
-  public endTdt?: Date;
+  public endTdt?: string;
 
   @Field({ nullable: true })
   public head?: string;
@@ -27,7 +27,7 @@ export class CreateVectorSlotInput {
   public vectorSlot!: string;
 
   @Field({ nullable: true })
-  public startTdt?: Date;
+  public startTdt?: string;
 
   @Field(() => STATUS)
   public status!: STATUS;
