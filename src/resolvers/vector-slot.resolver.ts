@@ -3,7 +3,7 @@ import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { createVectorSlotsInput } from '../inputs';
 import { VectorSlot } from '../models';
 import { Response } from '../responses';
-import { LessThan, LessThanOrEqual, getConnection } from 'typeorm';
+import { LessThanOrEqual, getConnection } from 'typeorm';
 import { VALUE_TYPE } from '../constants';
 
 @Resolver(() => VectorSlot)
