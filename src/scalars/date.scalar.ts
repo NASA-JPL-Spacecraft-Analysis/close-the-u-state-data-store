@@ -7,12 +7,12 @@ export const DateScalar = new GraphQLScalarType({
   name: 'ScetDateTime',
   description: 'Scet date time',
   serialize(value: string): string {
-    return formatInTimeZone(value, 'PST', dateFormat);
+    return formatInTimeZone(value, 'UTC', dateFormat);
   },
   parseValue(value: unknown): Date {
-    return zonedTimeToUtc(value as string, 'PST');
+    return zonedTimeToUtc(value as string, 'UTC');
   },
   parseLiteral(value: unknown): Date {
-    return zonedTimeToUtc((value as StringValueNode).value, 'PST');
+    return zonedTimeToUtc((value as StringValueNode).value, 'UTC');
   }
 });

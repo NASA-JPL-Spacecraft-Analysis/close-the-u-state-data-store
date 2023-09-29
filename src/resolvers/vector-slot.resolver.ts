@@ -4,6 +4,7 @@ import { createVectorSlotsInput } from '../inputs';
 import { VectorSlot } from '../models';
 import { Response } from '../responses';
 import { LessThan, LessThanOrEqual } from 'typeorm';
+import { VALUE_TYPE } from '../constants';
 
 @Resolver(() => VectorSlot)
 export class VectorSlotResolver {
@@ -31,6 +32,49 @@ export class VectorSlotResolver {
         .delete()
         .where('collectionName = :collectionName', { collectionName })
         .execute();
+
+      if (vectorSlots.affected === 0) {
+        return {
+          message: `${vectorSlots.affected} Vector Slots were deleted in ${collectionName}`,
+          success: false
+        };
+      }
+
+      return {
+        message: `Successfully deleted ${vectorSlots.affected} Vector Slots in ${collectionName}`,
+        success: true
+      };
+    } catch (error) {
+      return {
+        message: `Failed to delete Vector Slots in collectionName: ${collectionName}`,
+        success: false
+      };
+    }
+  }
+
+  @Mutation(() => Response)
+  public async deleteVectorSlotsByTime(
+    @Arg('collectionName') collectionName: string,
+    @Arg('valueType', () => VALUE_TYPE) valueType: VALUE_TYPE,
+    @Arg('applicableTime') applicableTime: Date
+  ) {
+    try {
+      console.log(collectionName, valueType, applicableTime);
+
+      const vectorSlots = await VectorSlot.createQueryBuilder()
+        .delete()
+        .where(
+          'collectionName = :collectionName and valueType = :valueType and applicableTime = :applicableTime',
+          { collectionName, valueType, applicableTime }
+        )
+        .execute();
+
+      if (vectorSlots.affected === 0) {
+        return {
+          message: `${vectorSlots.affected} Vector Slots were deleted in ${collectionName}`,
+          success: false
+        };
+      }
 
       return {
         message: `Successfully deleted ${vectorSlots.affected} Vector Slots in ${collectionName}`,
