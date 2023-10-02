@@ -23,8 +23,6 @@ export class StateResolver {
   public async createStates(@Arg('data') data: CreateStatesInput): Promise<Response> {
     try {
       const states = State.create(data.states);
-      const promises = [];
-
       const { errorMessage, valid } = this.validationService.validateStateTypes(states);
 
       if (!valid && errorMessage) {
@@ -34,16 +32,12 @@ export class StateResolver {
         };
       }
 
-      for (const state of states) {
-        promises.push(state.save());
-      }
+      await getConnection().createQueryBuilder().insert().into(State).values(states).execute();
 
-      return Promise.all(promises).then(() => {
-        return {
-          message: 'State imported',
-          success: true
-        };
-      });
+      return {
+        message: `${states.length} States imported`,
+        success: true
+      };
     } catch (error) {
       return {
         message: 'State failed to import',

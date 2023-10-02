@@ -3,7 +3,7 @@ import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { createVectorSlotsInput } from '../inputs';
 import { VectorSlot } from '../models';
 import { Response } from '../responses';
-import { LessThan, LessThanOrEqual } from 'typeorm';
+import { LessThan, LessThanOrEqual, getConnection } from 'typeorm';
 import { VALUE_TYPE } from '../constants';
 
 @Resolver(() => VectorSlot)
@@ -11,10 +11,17 @@ export class VectorSlotResolver {
   @Mutation(() => Response)
   public async createVectorSlots(@Arg('data') data: createVectorSlotsInput): Promise<Response> {
     try {
-      VectorSlot.create(data.vectorSlots).every((vectorSlot) => vectorSlot.save());
+      const vectorSlots = VectorSlot.create(data.vectorSlots);
+
+      await getConnection()
+        .createQueryBuilder()
+        .insert()
+        .into(VectorSlot)
+        .values(vectorSlots)
+        .execute();
 
       return {
-        message: 'Vector Slots imported',
+        message: `${vectorSlots.length} Vector Slots imported`,
         success: true
       };
     } catch (error) {
