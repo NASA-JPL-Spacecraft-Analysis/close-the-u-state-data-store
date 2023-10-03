@@ -36,17 +36,19 @@ CREATE TABLE `events` (
 CREATE TABLE
   `vector_slot` (
     `id` varchar(36) NOT NULL,
-    `endTdt` datetime(3) DEFAULT NULL,
+    `endTdt` text DEFAULT NULL,
     `base` text NOT NULL,
     `head` text NOT NULL,
-    `slot` text NOT NULL,
+    `vectorSlot` text NOT NULL,
     `order` text DEFAULT NULL,
-    `startTdt` datetime(3) DEFAULT NULL,
+    `startTdt` text DEFAULT NULL,
+    `applicableTime` datetime(3) DEFAULT NULL,
     `status` text NOT NULL,
     `type` text DEFAULT NULL,
     `valueType` text DEFAULT NULL,
     `x_coefficients` json DEFAULT NULL,
     `y_coefficients` json DEFAULT NULL,
     `z_coefficients` json DEFAULT NULL,
+    `collectionName` text DEFAULT NULL,
     PRIMARY KEY (`id`)
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8;

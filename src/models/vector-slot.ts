@@ -30,11 +30,19 @@ registerEnumType(VECTOR_SLOT_VALUE_TYPE, { name: 'VECTOR_SLOT_VALUE_TYPE' });
 export class VectorSlot extends BaseEntity {
   @Column({ nullable: true })
   @Field({ nullable: true })
+  public applicableTime?: Date;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   public base?: string;
 
   @Column({ nullable: true })
   @Field({ nullable: true })
-  public endTdt?: Date;
+  public collectionName?: string;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  public endTdt?: string;
 
   @Column({ nullable: true })
   @Field({ nullable: true })
@@ -54,7 +62,7 @@ export class VectorSlot extends BaseEntity {
 
   @Column({ nullable: true })
   @Field({ nullable: true })
-  public startTdt?: Date;
+  public startTdt?: string;
 
   @Column()
   @Field(() => STATUS)
