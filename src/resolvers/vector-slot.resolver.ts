@@ -1,10 +1,9 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 
 import { createVectorSlotsInput } from '../inputs';
-import { VectorSlot } from '../models';
+import { VECTOR_SLOT_VALUE_TYPE, VectorSlot } from '../models';
 import { Response } from '../responses';
-import { LessThan, LessThanOrEqual, getConnection } from 'typeorm';
-import { VALUE_TYPE } from '../constants';
+import { LessThanOrEqual, getConnection } from 'typeorm';
 
 @Resolver(() => VectorSlot)
 export class VectorSlotResolver {
@@ -62,7 +61,7 @@ export class VectorSlotResolver {
   @Mutation(() => Response)
   public async deleteVectorSlotsByTime(
     @Arg('collectionName') collectionName: string,
-    @Arg('valueType', () => VALUE_TYPE) valueType: VALUE_TYPE,
+    @Arg('valueType', () => VECTOR_SLOT_VALUE_TYPE) valueType: VECTOR_SLOT_VALUE_TYPE,
     @Arg('applicableTime') applicableTime: Date
   ) {
     try {
