@@ -57,12 +57,12 @@ export class VectorSlot extends BaseEntity {
   public id!: string;
 
   @Column({ name: 'initial_position_coefficients_m', type: 'json', nullable: true })
-  @Field({ nullable: true })
-  public initialPositionCoefficientsM?: string;
+  @Field(() => GraphQLJSON, { nullable: true })
+  public initialPositionCoefficientsM?: {};
 
   @Column({ name: 'initial_velocity_coefficients_mps', type: 'json', nullable: true })
-  @Field({ nullable: true })
-  public initialVelocityCoefficientsMps?: string;
+  @Field(() => GraphQLJSON, { nullable: true })
+  public initialVelocityCoefficientsMps?: {};
 
   @Column({ nullable: true })
   @Field({ nullable: true })
@@ -94,5 +94,5 @@ export class VectorSlot extends BaseEntity {
 
   @Column({ name: 'xyz_coefficients', type: 'json', nullable: true })
   @Field(() => GraphQLJSON, { nullable: true })
-  public xyzCoefficients?: string[];
+  public xyzCoefficients?: {};
 }
