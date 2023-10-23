@@ -48,9 +48,21 @@ export class VectorSlot extends BaseEntity {
   @Field({ nullable: true })
   public head?: string;
 
+  @Column({ name: 'gravitational_parameter_m3_per_s2', nullable: true })
+  @Field({ nullable: true })
+  public gravitationalParameterM3PerS2?: string;
+
   @PrimaryGeneratedColumn('uuid')
   @Field()
   public id!: string;
+
+  @Column({ name: 'initial_position_coefficients_m', type: 'json', nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
+  public initialPositionCoefficientsM?: {};
+
+  @Column({ name: 'initial_velocity_coefficients_mps', type: 'json', nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
+  public initialVelocityCoefficientsMps?: {};
 
   @Column({ nullable: true })
   @Field({ nullable: true })
@@ -73,18 +85,14 @@ export class VectorSlot extends BaseEntity {
   public type?: TYPE;
 
   @Column({ nullable: true })
+  @Field({ nullable: true })
+  public validityTime?: Date;
+
+  @Column({ nullable: true })
   @Field(() => VECTOR_SLOT_VALUE_TYPE, { nullable: true })
   public valueType?: VECTOR_SLOT_VALUE_TYPE;
 
-  @Column({ name: 'x_coefficients', type: 'json', nullable: true })
+  @Column({ name: 'xyz_coefficients', type: 'json', nullable: true })
   @Field(() => GraphQLJSON, { nullable: true })
-  public xCoefficients?: string[];
-
-  @Column({ name: 'y_coefficients', type: 'json', nullable: true })
-  @Field(() => GraphQLJSON, { nullable: true })
-  public yCoefficients?: string[];
-
-  @Column({ name: 'z_coefficients', type: 'json', nullable: true })
-  @Field(() => GraphQLJSON, { nullable: true })
-  public zCoefficients?: string[];
+  public xyzCoefficients?: {};
 }
