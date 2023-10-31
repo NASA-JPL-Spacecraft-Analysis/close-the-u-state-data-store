@@ -105,6 +105,6 @@ export class VectorSlot extends BaseEntity {
   public zCoefficients?: string[];
 
   @Column({ name: 'xyz_coefficients', type: 'json', nullable: true })
-  @Field(() => GraphQLJSON, { nullable: true })
+  @Field({ nullable: true })
   public xyzCoefficients?: string;
 }

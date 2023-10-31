@@ -47,13 +47,13 @@ export class CreateVectorSlotInput {
   @Field(() => VECTOR_SLOT_VALUE_TYPE, { nullable: true })
   public valueType?: VECTOR_SLOT_VALUE_TYPE;
 
-  @Field(() => [String], { nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
   public xCoefficients?: string[];
 
-  @Field(() => [String], { nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
   public yCoefficients?: string[];
 
-  @Field(() => [String], { nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
   public zCoefficients?: string[];
 
   @Field({ nullable: true })
