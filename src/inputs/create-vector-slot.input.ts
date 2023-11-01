@@ -24,10 +24,10 @@ export class CreateVectorSlotInput {
   public gravitationalParameterM3PerS2: string;
 
   @Field(() => GraphQLJSON, { nullable: true })
-  public initialPositionCoefficientsM?: {};
+  public initialPositionCoefficientsM?: string[];
 
   @Field(() => GraphQLJSON, { nullable: true })
-  public initialVelocityCoefficientsMps?: {};
+  public initialVelocityCoefficientsMps?: string[];
 
   @Field({ nullable: true })
   public order?: string;
@@ -47,9 +47,18 @@ export class CreateVectorSlotInput {
   @Field(() => VECTOR_SLOT_VALUE_TYPE, { nullable: true })
   public valueType?: VECTOR_SLOT_VALUE_TYPE;
 
+  @Field(() => GraphQLJSON, { nullable: true })
+  public xCoefficients?: string[];
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  public yCoefficients?: string[];
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  public zCoefficients?: string[];
+
   @Field({ nullable: true })
   public validityTime?: Date;
 
   @Field(() => GraphQLJSON, { nullable: true })
-  public xyzCoefficients?: {};
+  public xyzCoefficients?: string[];
 }

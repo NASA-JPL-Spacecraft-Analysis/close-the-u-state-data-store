@@ -58,11 +58,11 @@ export class VectorSlot extends BaseEntity {
 
   @Column({ name: 'initial_position_coefficients_m', type: 'json', nullable: true })
   @Field(() => GraphQLJSON, { nullable: true })
-  public initialPositionCoefficientsM?: {};
+  public initialPositionCoefficientsM?: string[];
 
   @Column({ name: 'initial_velocity_coefficients_mps', type: 'json', nullable: true })
   @Field(() => GraphQLJSON, { nullable: true })
-  public initialVelocityCoefficientsMps?: {};
+  public initialVelocityCoefficientsMps?: string[];
 
   @Column({ nullable: true })
   @Field({ nullable: true })
@@ -92,7 +92,19 @@ export class VectorSlot extends BaseEntity {
   @Field(() => VECTOR_SLOT_VALUE_TYPE, { nullable: true })
   public valueType?: VECTOR_SLOT_VALUE_TYPE;
 
+  @Column({ name: 'x_coefficients', type: 'json', nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
+  public xCoefficients?: string[];
+
+  @Column({ name: 'y_coefficients', type: 'json', nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
+  public yCoefficients?: string[];
+
+  @Column({ name: 'z_coefficients', type: 'json', nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
+  public zCoefficients?: string[];
+
   @Column({ name: 'xyz_coefficients', type: 'json', nullable: true })
   @Field(() => GraphQLJSON, { nullable: true })
-  public xyzCoefficients?: {};
+  public xyzCoefficients?: string[];
 }

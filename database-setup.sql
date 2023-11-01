@@ -50,6 +50,9 @@ CREATE TABLE
     `type` text DEFAULT NULL,
     `validityTime` datetime(3) DEFAULT NULL,
     `valueType` text DEFAULT NULL,
+    `x_coefficients` json DEFAULT NULL,
+    `y_coefficients` json DEFAULT NULL,
+    `z_coefficients` json DEFAULT NULL,
     `xyz_coefficients` json DEFAULT NULL,
     `collectionName` text DEFAULT NULL,
     PRIMARY KEY (`id`)
