@@ -46,6 +46,7 @@ CREATE TABLE
     `order` text DEFAULT NULL,
     `startTdt` text DEFAULT NULL,
     `applicableTime` datetime(3) DEFAULT NULL,
+    `applicableEndTime` datetime(3) DEFAULT NULL,
     `status` text NOT NULL,
     `type` text DEFAULT NULL,
     `validityTime` datetime(3) DEFAULT NULL,

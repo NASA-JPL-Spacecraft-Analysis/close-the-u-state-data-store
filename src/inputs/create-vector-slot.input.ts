@@ -9,6 +9,9 @@ export class CreateVectorSlotInput {
   public applicableTime?: Date;
 
   @Field({ nullable: true })
+  public applicableEndTime?: Date;
+
+  @Field({ nullable: true })
   public base?: string;
 
   @Field({ nullable: true })
