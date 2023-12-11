@@ -1,7 +1,7 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 
 import { createVectorSlotsInput } from '../inputs';
-import { VECTOR_SLOT_VALUE_TYPE, VectorSlot } from '../models';
+import { STATUS, VECTOR_SLOT_VALUE_TYPE, VectorSlot } from '../models';
 import { Response } from '../responses';
 import { LessThanOrEqual, getConnection } from 'typeorm';
 
@@ -126,6 +126,15 @@ export class VectorSlotResolver {
           existingSlot.applicableTime !== undefined &&
           vs.applicableTime > existingSlot.applicableTime)
       ) {
+        // Set the status to 'expired' if applicable.
+        if (
+          vs.applicableTime !== undefined &&
+          vs.applicableEndTime !== undefined &&
+          vs.applicableTime > vs.applicableEndTime
+        ) {
+          vs.status = STATUS.expired;
+        }
+
         vectorSlotMap[vs.vectorSlot] = vs;
       }
     });

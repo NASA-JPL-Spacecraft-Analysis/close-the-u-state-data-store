@@ -14,7 +14,8 @@ export enum STATUS {
   deleted = 'deleted',
   empty = 'empty',
   replacement = 'replacement',
-  unchanged = 'unchanged'
+  unchanged = 'unchanged',
+  expired = 'expired'
 }
 registerEnumType(STATUS, { name: 'STATUS' });
 
@@ -31,6 +32,10 @@ export class VectorSlot extends BaseEntity {
   @Column({ nullable: true })
   @Field({ nullable: true })
   public applicableTime?: Date;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  public applicableEndTime?: Date;
 
   @Column({ nullable: true })
   @Field({ nullable: true })
