@@ -126,15 +126,6 @@ export class VectorSlotResolver {
           existingSlot.applicableTime !== undefined &&
           vs.applicableTime > existingSlot.applicableTime)
       ) {
-        // Set the status to 'expired' if applicable.
-        if (
-          vs.applicableTime !== undefined &&
-          vs.applicableEndTime !== undefined &&
-          vs.applicableTime > vs.applicableEndTime
-        ) {
-          vs.status = STATUS.expired;
-        }
-
         vectorSlotMap[vs.vectorSlot] = vs;
       }
     });
