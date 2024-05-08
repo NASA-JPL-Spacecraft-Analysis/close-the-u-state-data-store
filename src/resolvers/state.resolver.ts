@@ -219,4 +219,41 @@ export class StateResolver {
       }
     });
   }
+
+  @Query(() => [State])
+  public async statesByFSWParameterInRange(
+    @Arg('collectionName', () => String) collectionName: string,
+    @Arg('cpu', () => String) cpu: string,
+    @Arg('volatility', () => String) volatility: string,
+    @Arg('stateNames', () => [String], { nullable: true }) stateNames: string[],
+    @Arg('start', { nullable: true }) start: Date,
+    @Arg('end', { nullable: true }) end: Date
+  ): Promise<State[]> {
+    if ((start && !end) || (!start && end)) {
+      throw new UserInputError('Please provide a valid start and end SCET time');
+    }
+
+    const whereClause: { [key: string]: any } = {
+      type: 'fsw_parameter',
+      collectionName,
+      cpu,
+      volatility: volatility.toUpperCase()
+    };
+
+    if (stateNames && stateNames.length) {
+      whereClause.name = In(stateNames);
+    }
+
+    if (start && end) {
+      whereClause.scet = Between(start, end);
+    }
+
+    return await State.find({
+      where: whereClause,
+      order: {
+        scet: 'ASC'
+      }
+    });
+  }
 }
+
