@@ -6,6 +6,7 @@ ADD COLUMN `hexId` text DEFAULT NULL,
 ADD COLUMN `valueType` text DEFAULT NULL,
 ADD COLUMN `version` text DEFAULT NULL,
 ADD COLUMN `volatility` text DEFAULT NULL;
+ADD COLUMN `fswParamVersion` text DEFAULT NULL;
 
 UPDATE states
 SET valueType = UPPER(valueType);
