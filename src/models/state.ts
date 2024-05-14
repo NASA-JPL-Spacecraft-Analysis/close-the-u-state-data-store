@@ -31,4 +31,8 @@ export class State extends Node {
     @Column({ nullable: true })
     @Field({ nullable: true })
     public volatility?: VOLATILITY;
+
+    @Column({ nullable: true })
+    @Field({ nullable: true })
+    public fswParamVersion?: string;
 }

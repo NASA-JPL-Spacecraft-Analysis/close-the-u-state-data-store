@@ -52,4 +52,7 @@ export class CreateStateInput {
 
   @Field(() => VOLATILITY, { nullable: true })
   public volatility?: VOLATILITY;
+
+  @Field({ nullable: true })
+  public fswParamVersion?: string;
 }
